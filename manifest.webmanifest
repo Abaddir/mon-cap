@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "MON CAP — Construire ma liberté",
+  "short_name": "MON CAP",
+  "description": "Mon espace personnel de réflexion et d'orientation",
+  "lang": "fr",
+  "start_url": "./#/accueil",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0e14",
+  "theme_color": "#11151e",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
