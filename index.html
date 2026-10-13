@@ -384,6 +384,24 @@ body.is-installed #install-app{display:none}
 .brand-name{white-space:nowrap}
 .brand-name .brand-lighthouse{display:inline-block;width:18px;height:26px;margin-left:5px;vertical-align:-5px;overflow:visible;filter:drop-shadow(0 0 3px #d9ff4340)}
 .explore-page{max-width:1100px;margin:auto}.explore-hero,.explore-zone{border:1px solid #4a6283;border-radius:19px;background:linear-gradient(120deg,#223048,#1b273a);padding:clamp(20px,3vw,33px);margin-bottom:19px}.explore-hero h1{font:700 clamp(34px,5vw,55px) var(--heading);margin:15px 0}.explore-hero p,.explore-zone p{color:#bacce2;line-height:1.8;font-size:14px}.explore-hero strong{color:#d9ff43}.explore-zone h2{font:700 24px var(--heading)}.explore-zone textarea{width:100%;box-sizing:border-box;background:#101d2e;color:#fff;border:1px solid #506987;border-radius:11px;padding:13px;font:13px/1.6 var(--font);resize:vertical}.explore-zone textarea:focus{outline:2px solid #bb92ff}.explore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.explore-piste{padding:15px;border:1px solid #415574;border-radius:13px;background:#152338}.explore-piste label{display:block;font-size:12px;font-weight:700;color:#cfdaef;margin-top:13px}.explore-piste textarea{margin-top:6px}.explore-links{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.explore-links a{padding:10px 15px;border:1px solid #526f8e;border-radius:10px;color:#bcd8ff}.explore-teaser{display:flex;justify-content:space-between;align-items:center;gap:20px;border:1px solid #6d5d96;border-radius:17px;background:#28243d;padding:21px;margin:25px 0}.explore-teaser h2{font:700 23px var(--heading);margin:8px 0}.explore-teaser p{color:#bfcbe0;font-size:13px;line-height:1.7;max-width:680px}@media(max-width:950px){.explore-grid{grid-template-columns:1fr}.explore-teaser{display:block}}
+
+/* Menu mobile : défilement indépendant et page figée pendant l'ouverture. */
+@media (max-width:990px) {
+ .sidebar {
+   height:100vh;
+   height:100dvh;
+   overflow-x:hidden;
+   overflow-y:auto;
+   -webkit-overflow-scrolling:touch;
+   overscroll-behavior-y:contain;
+   touch-action:pan-y;
+   padding-bottom:max(25px,env(safe-area-inset-bottom));
+ }
+ .sidebar .brand, .sidebar .side-section-label, .sidebar .stage-nav, .sidebar .side-main, .sidebar .sidebar-bottom {flex-shrink:0;}
+ .mobile-overlay {touch-action:none;overscroll-behavior:none;}
+ body.mobile-menu-open{overflow:hidden;touch-action:none;width:100%;}
+ body.mobile-menu-open .sidebar{touch-action:pan-y;}
+}
 </style>
 
 
@@ -1138,17 +1156,40 @@ function renderExplorer(){
       try { return document.execCommand('copy'); } catch(e2) { return false; }
     }
   }
+  let mobileMenuScrollY=0;
+  function openMobile() {
+    const side=document.getElementById('sidebar');
+    mobileMenuScrollY=window.scrollY;
+    document.body.style.position='fixed';
+    document.body.style.top='-'+mobileMenuScrollY+'px';
+    document.body.style.left='0';
+    document.body.style.right='0';
+    document.body.classList.add('mobile-menu-open');
+    side.classList.add('mobile-open');
+    document.getElementById('mobile-overlay').hidden=false;
+    document.getElementById('mobile-menu').setAttribute('aria-expanded','true');
+  }
   function closeMobile() {
-    document.getElementById('sidebar').classList.remove('mobile-open');
+    const side=document.getElementById('sidebar');
+    side.classList.remove('mobile-open');
     document.getElementById('mobile-overlay').hidden=true;
     document.getElementById('mobile-menu').setAttribute('aria-expanded','false');
+    if(document.body.classList.contains('mobile-menu-open')){
+      document.body.classList.remove('mobile-menu-open');
+      document.body.style.position='';
+      document.body.style.top='';
+      document.body.style.left='';
+      document.body.style.right='';
+      window.scrollTo(0,mobileMenuScrollY);
+    }
   }
   function setupGlobalEvents() {
     window.addEventListener('hashchange',route);
     document.getElementById('stage-nav').addEventListener('click',e=>{const btn=e.target.closest('[data-stage]');if(btn)navigate('mission',Number(btn.dataset.stage));});
     document.querySelectorAll('.sidebar [data-go],.topbar [data-go]').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.go)));
     document.getElementById('mobile-menu').addEventListener('click',()=>{
-      const side=document.getElementById('sidebar');const open=side.classList.toggle('mobile-open');document.getElementById('mobile-overlay').hidden=!open;document.getElementById('mobile-menu').setAttribute('aria-expanded',String(open));
+      if(document.getElementById('sidebar').classList.contains('mobile-open'))closeMobile();
+      else openMobile();
     });
     document.getElementById('mobile-overlay').addEventListener('click',closeMobile);
     document.getElementById('copy-prompt').addEventListener('click',async()=>{
