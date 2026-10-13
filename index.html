@@ -342,6 +342,44 @@ body.is-installed #install-app{display:none}
 @media(max-width:750px){.topbar{min-height:calc(68px + env(safe-area-inset-top,0px));height:auto;flex-basis:auto}.install-top{padding:10px 12px}.install-top-label{display:none}.install-feature{padding:18px;grid-template-columns:42px 1fr;gap:14px}.install-feature-icon{width:42px;height:42px;font-size:23px}.install-feature h2{font-size:17px}.install-feature .btn-install{grid-column:1/-1;justify-self:stretch}.backup-reminder{flex-wrap:wrap}.backup-reminder button{width:100%}.question-card textarea{min-height:142px}.install-dialog{max-height:82dvh}.footer{padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}}
 @media(max-width:450px){.install-feature{margin-top:18px}.install-feature h2{font-size:16px}.install-feature p{font-size:11px}.install-step{padding:13px}.update-banner{flex-wrap:wrap;justify-content:center;bottom:calc(11px + env(safe-area-inset-bottom,0px))}.update-banner>span{width:100%;text-align:center}.network-state{display:none}}
 
+
+/* MON CAP V5 — six missions, identité chromatique et réflexion personnalisée */
+:root{--teal:#50dfd0}
+.accent-teal{--accent:var(--teal);--accent-rgb:80,223,208}
+.step-teal{--accent:var(--teal)}
+.nav-stage.active .nav-stage-num{background:var(--item-color,var(--lime));border-color:var(--item-color,var(--lime))}
+.nav-stage.active{border-color:var(--item-color,#374256)}
+.nav-stage-bullet.filled{background:var(--item-color,var(--green))}
+.mission-hero p.mission-lead{color:var(--accent);font-weight:500;line-height:1.8}
+.step-meter{grid-template-columns:repeat(6,minmax(0,1fr))}
+.meter-segment.done:not(.now){background:var(--segment-color,#617e7d);opacity:.72}
+.mission-bottom-actions .btn-lime{background:var(--accent);color:#111820}
+.mission-view .question-card .question-head,.mission-view .questions-kicker{color:var(--accent)}
+.mission-view .question-card:focus-within{border-color:var(--accent)}
+.priorities-panel{background:linear-gradient(140deg,#1c2c34,#14262b);border:1px solid rgba(80,223,208,.45);border-radius:18px;padding:clamp(18px,3vw,27px);margin-bottom:30px}
+.priorities-top{display:flex;justify-content:space-between;gap:12px;color:var(--teal);font:700 11px var(--heading);letter-spacing:1.2px}
+.priorities-top strong{color:#f5fbff;font-size:16px}
+.priorities-panel h2{font:700 clamp(24px,3vw,33px) var(--heading);margin:18px 0 10px}
+.priorities-panel>p{color:#bfd5db;line-height:1.7;font-size:13px;margin:0 0 20px}
+.priorities-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.priority-choice{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:7px;padding:19px;background:#25333b;border:1px solid #4a6569;border-radius:13px;color:#f1f9fb;min-height:143px;transition:border-color .16s,background .16s}
+.priority-choice:hover,.priority-choice:focus-visible{border-color:var(--teal)}
+.priority-choice.chosen{border-color:var(--teal);background:#20463f}
+.priority-circle{display:grid;place-items:center;width:22px;height:22px;border:2px solid #9bafb5;border-radius:50%;font-size:13px}
+.priority-choice.chosen .priority-circle{border-color:var(--teal);background:var(--teal);color:#092527}
+.priority-choice strong{font-size:15px}
+.priority-choice small{color:#aebfc8;font-size:12px}
+.priorities-panel p.priority-hint{margin:16px 0 0;color:#9fe8dd;font-size:11px}
+.draft-zone{background:linear-gradient(125deg,#34264c,#231f39 64%,#20283f);border:1px solid #9164d8;box-shadow:0 0 0 1px #b388ff15,inset 0 1px #ddd0ff11}
+.draft-zone .section-label-row>span{color:#ddbbff}
+.draft-zone .btn-chat-violet{display:inline-flex;background:#9d6cf3;color:#111521;border-color:#bb94ff;margin:0 0 18px;font-size:13px}
+.draft-zone .btn-chat-violet:hover{background:#bb93ff}
+.draft-zone .draft-label{display:block;color:#dac6fa;font-size:12px;font-weight:700;margin:3px 0 9px}
+.reflection-workflow .reflection-head .headline-period{color:var(--accent)}
+.reflection-workflow .summary-field label span{color:var(--accent)}
+.carnet-number{color:var(--teal)}
+@media(max-width:600px){.priorities-grid{grid-template-columns:1fr}.priority-choice{min-height:120px}.priorities-panel{padding:17px}.draft-zone .btn-chat-violet{width:100%;text-align:center}}
+
 </style>
 
 
@@ -356,8 +394,8 @@ body.is-installed #install-app{display:none}
       </a>
       <div class="side-section-label">PARCOURS PERSONNEL</div>
       <button class="side-main" data-go="accueil"><span class="side-icon">⌂</span> Vue d'ensemble <span class="side-end">↗</span></button>
-      <div class="side-section-label side-section-label--stages">MISSION ACTIVE <span>01 / 06</span></div>
-      <nav id="stage-nav" class="stage-nav" aria-label="Étapes de la mission 1"></nav>
+      <div class="side-section-label side-section-label--stages">MES MISSIONS <span>01–06</span></div>
+      <nav id="stage-nav" class="stage-nav" aria-label="Les six missions de MON CAP"></nav>
       <div class="sidebar-divider"></div>
       <button class="side-main" data-go="carnet"><span class="side-icon">▤</span> Mon carnet <span class="side-end" id="sidebar-response-count">0</span></button>
       <button class="side-main" data-go="bilan"><span class="side-icon">✳</span> Mon bilan <span class="side-end">↗</span></button>
@@ -379,17 +417,17 @@ body.is-installed #install-app{display:none}
         </div>
       </header>
       <main id="app" class="main-content" tabindex="-1"><noscript><section style="padding:26px;border:1px solid #ff9957;background:#192334;border-radius:16px"><h1>Activer JavaScript pour commencer</h1><p>Les questions de MON CAP sont interactives : ouvre ce fichier dans un navigateur autorisant JavaScript (Chrome, Firefox, Safari ou Edge).</p></section></noscript></main>
-      <footer class="footer"><span>MON CAP / VERSION 04.0 PWA</span><span>Prendre son temps, c'est aussi avancer.</span></footer>
+      <footer class="footer"><span>MON CAP / VERSION 05.0 PWA</span><span>Prendre son temps, c'est aussi avancer.</span></footer>
     </div>
   </div>
   <div class="mobile-overlay" id="mobile-overlay" hidden></div>
   <dialog id="prompt-dialog" class="modal" aria-labelledby="dialog-title">
     <form method="dialog" class="dialog-header"><div><div class="eyebrow color-blue">PASSER À LA RÉFLEXION</div><h2 id="dialog-title">Poursuivre avec ChatGPT</h2></div><button class="icon-btn" aria-label="Fermer">✕</button></form>
     <p class="dialog-description">Voici un message préparé pour explorer cette étape. Il sera copié uniquement si tu appuies sur « Copier ». Tu choisiras ensuite si tu veux le coller dans ChatGPT.</p>
-    <label class="check-option"><input type="checkbox" id="include-answers"><span id="include-answers-label">Inclure mes réponses déjà écrites dans le message</span></label>
-    <p class="notice-small">Tes réponses sont personnelles. Choisis seulement ce que tu souhaites partager. Ne mets pas d’informations identifiantes ou sensibles inutiles dans le message.</p>
+    
+    <p class="notice-small">Tes réponses déjà écrites sont intégrées dans le message. Relis-le et modifie-le si tu souhaites retirer une information personnelle. Rien n’est envoyé automatiquement.</p>
     <label for="prompt-preview" class="label-prompt">MESSAGE À ENVOYER</label>
-    <textarea readonly id="prompt-preview" rows="10" spellcheck="false"></textarea>
+    <textarea id="prompt-preview" rows="10" spellcheck="false" aria-label="Message modifiable destiné à ChatGPT"></textarea>
     <div class="dialog-actions"><button type="button" class="btn btn-ghost" id="copy-prompt">⧉ Copier le message</button><a class="btn btn-lime" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Ouvrir ChatGPT ↗</a></div>
     <p class="dialog-tip" id="dialog-tip" role="status" aria-live="polite">Étape 1 : copie le message. Étape 2 : ouvre ChatGPT et colle-le dans une nouvelle conversation.</p>
   </dialog>
@@ -407,65 +445,250 @@ body.is-installed #install-app{display:none}
 /* MON CAP — prototype local-first. Aucune donnée personnelle envoyée à un serveur par ce script. */
 (() => {
   'use strict';
+  // Même clé qu'en V4 pour retrouver les réponses déjà sauvegardées.
   const STORAGE_KEY = 'moncap_mission01_v1';
   const stages = [
     {
-      id: 1, short: 'Mes moteurs', title: 'Ce qui me donne envie d’avancer', tag: 'LA MOTIVATION', color: 'lime', minutes: '15–20 min',
-      lead: 'Certaines choses te donnent naturellement envie de t’investir. D’autres non. Avant de parler d’études ou de métiers, essayons de comprendre cette différence.',
-      thought: 'Pas besoin de te trouver une passion ou un métier. Cherche des exemples réels, même tout petits.',
-      challenge: 'Est-ce qu’une activité que tu n’aimes pas peut quand même avoir un intérêt pour toi ?',
-      questions: [
-        { id: 'q01', title: 'Qu’est-ce qui te passionne suffisamment pour y consacrer du temps ?', hint: 'Pense à tes activités, tes projets, tes curiosités — pas uniquement à l’école.', help: 'Qu’est-ce que tu fais de ton plein gré ? Combien de temps peux-tu y passer ?' },
-        { id: 'q02', title: 'Raconte une chose que tu as apprise récemment, sans qu’on te le demande.', hint: 'Un exemple concret vaut mieux qu’une longue description de ta personnalité.', help: 'Pourquoi as-tu eu envie de l’apprendre ? Qu’est-ce qui a été difficile ?' },
-        { id: 'q03', title: 'Quand tu trouves quelque chose inutile ou ennuyeux, comment réagis-tu ?', hint: 'Essaie de décrire ton comportement réel, pas ce que tu penses devoir répondre.', help: 'As-tu déjà changé d’avis sur l’utilité d’une activité ? Qu’est-ce qui t’a fait changer ?' }
-      ],
-      chatFocus: 'mes sources de motivation, mes intérêts et le rapport entre intérêt et effort'
+        "id": 1,
+        "short": "Mes moteurs",
+        "title": "Ce qui me donne envie d’avancer",
+        "tag": "LA MOTIVATION",
+        "color": "lime",
+        "minutes": "15–20 min",
+        "lead": "Certaines choses te donnent naturellement envie de t’investir. D’autres non. Avant de parler d’études ou de métiers, essayons de comprendre cette différence.",
+        "thought": "Pas besoin de te trouver une passion ou un métier. Cherche des exemples réels, même tout petits.",
+        "challenge": "Est-ce qu’une activité que tu n’aimes pas peut quand même avoir un intérêt pour toi ?",
+        "questions": [
+            {
+                "id": "q01",
+                "title": "Qu’est-ce qui te passionne suffisamment pour y consacrer du temps ?",
+                "hint": "Pense à tes activités, tes projets, tes curiosités — pas uniquement à l’école.",
+                "help": "Qu’est-ce que tu fais de ton plein gré ? Combien de temps peux-tu y passer ?"
+            },
+            {
+                "id": "q02",
+                "title": "Raconte une chose que tu as apprise récemment, sans qu’on te le demande.",
+                "hint": "Un exemple concret vaut mieux qu’une longue description de ta personnalité.",
+                "help": "Pourquoi as-tu eu envie de l’apprendre ? Qu’est-ce qui a été difficile ?"
+            },
+            {
+                "id": "q03",
+                "title": "Quand tu trouves quelque chose inutile ou ennuyeux, comment réagis-tu ?",
+                "hint": "Essaie de décrire ton comportement réel, pas ce que tu penses devoir répondre.",
+                "help": "As-tu déjà changé d’avis sur l’utilité d’une activité ? Qu’est-ce qui t’a fait changer ?"
+            }
+        ],
+        "chatFocus": "mes sources de motivation, mes intérêts et le rapport entre intérêt et effort",
+        "hex": "#d6ff3f",
+        "summaryHints": [
+            "Qu'as-tu compris sur ce qui te donne envie de t'investir, au-delà de tes activités préférées ?",
+            "Quels moments montrent ta curiosité, ton initiative ou ta capacité à poursuivre un effort ?",
+            "Qu'aimerais-tu encore comprendre dans tes motivations ou dans ton rapport à l'ennui ?",
+            "Quelle nouvelle activité pourrais-tu essayer pour tester ce qui t'intéresse vraiment ?"
+        ],
+        "summaryIntro": "Repère ce qui t'attire vraiment et les circonstances qui te donnent envie d'agir. Tu peux corriger ou nuancer ton brouillon."
     },
     {
-      id: 2, short: 'J’apprends', title: 'Ma manière d’apprendre', tag: 'MES MÉTHODES', color: 'blue', minutes: '15–20 min',
-      lead: 'Il n’existe pas une seule manière d’apprendre. Ici, tu vas regarder comment tu t’y prends réellement quand tu décides de comprendre quelque chose.',
-      thought: 'Dire « je me débrouille seul » est un début. Le plus intéressant, c’est de pouvoir expliquer comment.',
-      challenge: 'Quel type de problème aurais-tu du mal à résoudre uniquement avec tes méthodes habituelles ?',
-      questions: [
-        { id: 'q04', title: 'Quand tu découvres un nouvel outil ou une nouvelle activité, par quoi commences-tu ?', hint: 'Décris les premières minutes : est-ce que tu testes, tu lis, tu observes, tu cherches des exemples ?', help: 'Est-ce toujours pareil ? Dans quels cas changes-tu d’approche ?' },
-        { id: 'q05', title: 'Raconte une difficulté que tu as réussi à surmonter par toi-même.', hint: 'Qu’avais-tu tenté au départ ? Qu’est-ce qui n’a pas fonctionné ?', help: 'Comment as-tu compris ce qu’il fallait changer ? Qu’as-tu appris au passage ?' },
-        { id: 'q06', title: 'Comment sais-tu que tu maîtrises vraiment ce que tu viens d’apprendre ?', hint: 'Essaie de distinguer « ça marche une fois » de « je sais pourquoi ça marche ».', help: 'Pourrais-tu l’expliquer à quelqu’un ? Pourrais-tu le refaire dans un autre contexte ?' }
-      ], chatFocus: 'mes méthodes d’apprentissage, la compréhension réelle et l’autonomie'
+        "id": 2,
+        "short": "Mes priorités",
+        "title": "Qu’est-ce qui compte pour moi ?",
+        "tag": "MES VALEURS & MES CHOIX",
+        "color": "teal",
+        "hex": "#50dfd0",
+        "minutes": "15–20 min",
+        "lead": "Liberté, stabilité, créativité, temps libre… Ces envies n'ont pas toujours le même poids pour chacun. Explore ce qui compte pour toi et pourquoi.",
+        "thought": "Il n'existe pas de « bonnes » priorités. Elles peuvent évoluer selon ton âge, tes expériences et tes projets.",
+        "challenge": "Peut-on vouloir être indépendant tout en recherchant beaucoup de sécurité ? Dans quelles situations ces deux envies se rejoignent-elles ?",
+        "questions": [
+            {
+                "id": "q16",
+                "title": "Pourquoi as-tu retenu ces trois priorités plutôt que les autres ?",
+                "hint": "Explique ce que chacune représente concrètement pour toi, sans chercher la réponse idéale.",
+                "help": "À quoi ressemblerait une journée où ces priorités seraient respectées ?"
+            },
+            {
+                "id": "q17",
+                "title": "Raconte une décision ou une situation qui montre qu'une de ces priorités compte déjà pour toi.",
+                "hint": "Cela peut être un choix d'activité, un projet ou une façon de passer ton temps.",
+                "help": "Qu'as-tu réellement fait ? Qu'aurais-tu choisi si cette priorité avait moins compté ?"
+            },
+            {
+                "id": "q18",
+                "title": "Si deux de tes priorités entraient en conflit, comment ferais-tu ton choix ?",
+                "hint": "Imagine un choix concret : plus de liberté mais moins de stabilité, par exemple.",
+                "help": "Dans quelles circonstances changerais-tu d'avis ?"
+            }
+        ],
+        "chatFocus": "mes priorités, les choix que je fais et les tensions possibles entre mes valeurs",
+        "summaryHints": [
+            "Que révèlent tes trois choix sur ce qui compte pour toi aujourd'hui ?",
+            "Quelles situations concrètes montrent que ces priorités influencent déjà tes décisions ?",
+            "Quelles priorités pourrais-tu hésiter à départager, ou remettre en question plus tard ?",
+            "Quelle petite décision pourrait t'aider à vérifier l'importance d'une de ces priorités ?"
+        ],
+        "summaryIntro": "Tes choix de priorités sont un point de départ, pas une étiquette. Explique ce qu'ils signifient pour toi après la discussion."
     },
     {
-      id: 3, short: 'Les obstacles', title: 'Quand ça devient difficile', tag: 'EFFORT & PERSÉVÉRANCE', color: 'orange', minutes: '15–20 min',
-      lead: 'Personne n’a envie de faire des efforts tout le temps. L’enjeu est de comprendre ce qui t’aide à continuer et ce qui te fait décrocher.',
-      thought: 'Être persévérant ne signifie pas tout faire seul, ni continuer indéfiniment. Savoir ajuster sa stratégie compte aussi.',
-      challenge: 'À quel moment demander de l’aide devient-il une décision intelligente plutôt qu’un aveu de faiblesse ?',
-      questions: [
-        { id: 'q07', title: 'Parle d’une situation où tu t’es vraiment accroché malgré les difficultés.', hint: 'Qu’est-ce qui te donnait envie de continuer ?', help: 'Combien de tentatives ? Quels changements de stratégie ?' },
-        { id: 'q08', title: 'Raconte un moment où tu as fini par laisser tomber.', hint: 'Tu peux choisir un exemple sans importance. L’objectif n’est pas de te juger.', help: 'Qu’est-ce qui aurait pu t’aider ? Recommencerais-tu aujourd’hui ?' },
-        { id: 'q09', title: 'Que fais-tu lorsqu’une tâche indispensable ne t’intéresse pas du tout ?', hint: 'Pense à des situations précises plutôt qu’à une réponse idéale.', help: 'Quelles astuces te permettraient d’avancer quand même ?' }
-      ], chatFocus: 'ma persévérance, ma réaction à la frustration et mes stratégies face aux tâches difficiles'
+        "id": 3,
+        "short": "Mes méthodes",
+        "title": "Ma manière d’apprendre",
+        "tag": "MES MÉTHODES",
+        "color": "blue",
+        "minutes": "15–20 min",
+        "lead": "Il n’existe pas une seule manière d’apprendre. Ici, tu vas regarder comment tu t’y prends réellement quand tu décides de comprendre quelque chose.",
+        "thought": "Dire « je me débrouille seul » est un début. Le plus intéressant, c’est de pouvoir expliquer comment.",
+        "challenge": "Quel type de problème aurais-tu du mal à résoudre uniquement avec tes méthodes habituelles ?",
+        "questions": [
+            {
+                "id": "q04",
+                "title": "Quand tu découvres un nouvel outil ou une nouvelle activité, par quoi commences-tu ?",
+                "hint": "Décris les premières minutes : est-ce que tu testes, tu lis, tu observes, tu cherches des exemples ?",
+                "help": "Est-ce toujours pareil ? Dans quels cas changes-tu d’approche ?"
+            },
+            {
+                "id": "q05",
+                "title": "Raconte une difficulté que tu as réussi à surmonter par toi-même.",
+                "hint": "Qu’avais-tu tenté au départ ? Qu’est-ce qui n’a pas fonctionné ?",
+                "help": "Comment as-tu compris ce qu’il fallait changer ? Qu’as-tu appris au passage ?"
+            },
+            {
+                "id": "q06",
+                "title": "Comment sais-tu que tu maîtrises vraiment ce que tu viens d’apprendre ?",
+                "hint": "Essaie de distinguer « ça marche une fois » de « je sais pourquoi ça marche ».",
+                "help": "Pourrais-tu l’expliquer à quelqu’un ? Pourrais-tu le refaire dans un autre contexte ?"
+            }
+        ],
+        "chatFocus": "mes méthodes d’apprentissage, la compréhension réelle et l’autonomie",
+        "hex": "#649bff",
+        "summaryHints": [
+            "Qu'as-tu découvert sur la façon dont tu apprends et comprends de nouvelles choses ?",
+            "Quelles méthodes ou ressources t'ont déjà permis de progresser réellement ?",
+            "Dans quelles situations tes méthodes habituelles fonctionnent-elles moins bien ?",
+            "Quelle nouvelle stratégie d'apprentissage pourrais-tu tester prochainement ?"
+        ],
+        "summaryIntro": "Reviens sur les façons d'apprendre que tu utilises vraiment, en t'appuyant sur les exemples évoqués."
     },
     {
-      id: 4, short: 'Les autres', title: 'Les autres, les désaccords et moi', tag: 'ÉCOUTE & CONFIANCE', color: 'pink', minutes: '15–20 min',
-      lead: 'Être indépendant n’oblige pas à être seul. Tes idées vont souvent croiser celles d’autres personnes : partenaires, clients, amis ou famille.',
-      thought: 'Tu peux conserver ton opinion et écouter sincèrement une opinion différente. Les deux ne sont pas incompatibles.',
-      challenge: 'Comment ferais-tu la différence entre une critique mal fondée et une critique vraiment utile ?',
-      questions: [
-        { id: 'q10', title: 'Que ressens-tu quand quelqu’un critique une idée dont tu es convaincu ?', hint: 'Qu’est-ce que tu fais juste après ? Essaie de te souvenir d’un échange précis.', help: 'As-tu envie d’argumenter, d’écouter, de vérifier, de partir ?' },
-        { id: 'q11', title: 'Dans quelle situation demanderais-tu de l’aide à quelqu’un ?', hint: 'Et dans quelle situation préférerais-tu continuer seul, même si cela prend beaucoup de temps ?', help: 'Qu’est-ce qui rend une demande d’aide facile ou difficile pour toi ?' },
-        { id: 'q12', title: 'Quelle idée importante as-tu déjà changée après avoir appris quelque chose ?', hint: 'Si aucun exemple ne vient, quelle conviction actuelle pourrais-tu accepter de tester ?', help: 'Qu’est-ce qui constitue une preuve suffisamment solide pour te faire changer d’avis ?' }
-      ], chatFocus: 'ma relation aux critiques, aux autres et à la possibilité de changer d’avis'
+        "id": 4,
+        "short": "Effort & Persévérance",
+        "title": "Quand ça devient difficile",
+        "tag": "EFFORT & PERSÉVÉRANCE",
+        "color": "orange",
+        "minutes": "15–20 min",
+        "lead": "Personne n’a envie de faire des efforts tout le temps. L’enjeu est de comprendre ce qui t’aide à continuer et ce qui te fait décrocher.",
+        "thought": "Être persévérant ne signifie pas tout faire seul, ni continuer indéfiniment. Savoir ajuster sa stratégie compte aussi.",
+        "challenge": "À quel moment demander de l’aide devient-il une décision intelligente plutôt qu’un aveu de faiblesse ?",
+        "questions": [
+            {
+                "id": "q07",
+                "title": "Parle d’une situation où tu t’es vraiment accroché malgré les difficultés.",
+                "hint": "Qu’est-ce qui te donnait envie de continuer ?",
+                "help": "Combien de tentatives ? Quels changements de stratégie ?"
+            },
+            {
+                "id": "q08",
+                "title": "Raconte un moment où tu as fini par laisser tomber.",
+                "hint": "Tu peux choisir un exemple sans importance. L’objectif n’est pas de te juger.",
+                "help": "Qu’est-ce qui aurait pu t’aider ? Recommencerais-tu aujourd’hui ?"
+            },
+            {
+                "id": "q09",
+                "title": "Que fais-tu lorsqu’une tâche indispensable ne t’intéresse pas du tout ?",
+                "hint": "Pense à des situations précises plutôt qu’à une réponse idéale.",
+                "help": "Quelles astuces te permettraient d’avancer quand même ?"
+            }
+        ],
+        "chatFocus": "ma persévérance, ma réaction à la frustration et mes stratégies face aux tâches difficiles",
+        "hex": "#ffac62",
+        "summaryHints": [
+            "Qu'as-tu remarqué sur tes réactions quand une tâche devient difficile ou répétitive ?",
+            "Quels exemples montrent ce qui t'aide à tenir, à t'organiser ou à demander de l'aide ?",
+            "Quelles difficultés ou réactions aimerais-tu encore mieux comprendre ?",
+            "Quelle petite stratégie pourrais-tu essayer lors d'un prochain obstacle ?"
+        ],
+        "summaryIntro": "Prends du recul sur tes réactions à la difficulté sans te juger : les stratégies peuvent évoluer."
     },
     {
-      id: 5, short: 'Mon bilan', title: 'Ce que je comprends de moi', tag: 'SYNTHÈSE PERSONNELLE', color: 'violet', minutes: '15–20 min',
-      lead: 'Tu n’as pas besoin d’être sûr de tout. L’idée est de mettre en mots ce que tu commences à comprendre, et ce qu’il te reste à explorer.',
-      thought: 'Ce bilan n’est ni un diagnostic ni une note. Tes réponses pourront changer dans quelques semaines, et c’est normal.',
-      challenge: 'Quelle serait une petite expérience concrète qui te permettrait de vérifier une de tes idées ?',
-      questions: [
-        { id: 'q13', title: 'Quelles sont, selon toi, tes deux ou trois forces les plus utiles ?', hint: 'Associe si possible chaque force à un exemple réel.', help: 'Dans quelles situations pourrais-tu t’appuyer sur ces forces ?' },
-        { id: 'q14', title: 'Qu’aimerais-tu apprendre à mieux faire dans ta façon de fonctionner ?', hint: 'Il ne s’agit pas de chercher des défauts, mais des marges de progression.', help: 'Quelle petite action pourrait t’aider à progresser ?' },
-        { id: 'q15', title: 'Quelles questions sur toi restent ouvertes ? Et que voudrais-tu essayer ensuite ?', hint: 'Une expérience courte et réaliste vaut mieux qu’une grande promesse.', help: 'Comment saurais-tu que cette expérience t’a appris quelque chose ?' }
-      ], chatFocus: 'une synthèse nuancée de ce que j’ai compris de moi, sans me définir définitivement'
+        "id": 5,
+        "short": "Écoute & Confiance",
+        "title": "Les autres, les désaccords et moi",
+        "tag": "ÉCOUTE & CONFIANCE",
+        "color": "pink",
+        "minutes": "15–20 min",
+        "lead": "Être indépendant n’oblige pas à être seul. Tes idées vont souvent croiser celles d’autres personnes : partenaires, clients, amis ou famille.",
+        "thought": "Tu peux conserver ton opinion et écouter sincèrement une opinion différente. Les deux ne sont pas incompatibles.",
+        "challenge": "Comment ferais-tu la différence entre une critique mal fondée et une critique vraiment utile ?",
+        "questions": [
+            {
+                "id": "q10",
+                "title": "Que ressens-tu quand quelqu’un critique une idée dont tu es convaincu ?",
+                "hint": "Qu’est-ce que tu fais juste après ? Essaie de te souvenir d’un échange précis.",
+                "help": "As-tu envie d’argumenter, d’écouter, de vérifier, de partir ?"
+            },
+            {
+                "id": "q11",
+                "title": "Dans quelle situation demanderais-tu de l’aide à quelqu’un ?",
+                "hint": "Et dans quelle situation préférerais-tu continuer seul, même si cela prend beaucoup de temps ?",
+                "help": "Qu’est-ce qui rend une demande d’aide facile ou difficile pour toi ?"
+            },
+            {
+                "id": "q12",
+                "title": "Quelle idée importante as-tu déjà changée après avoir appris quelque chose ?",
+                "hint": "Si aucun exemple ne vient, quelle conviction actuelle pourrais-tu accepter de tester ?",
+                "help": "Qu’est-ce qui constitue une preuve suffisamment solide pour te faire changer d’avis ?"
+            }
+        ],
+        "chatFocus": "ma relation aux critiques, aux autres et à la possibilité de changer d’avis",
+        "hex": "#ff79c9",
+        "summaryHints": [
+            "Qu'as-tu compris sur ta manière de réagir aux avis et aux besoins des autres ?",
+            "Quels échanges concrets montrent ta capacité à écouter, coopérer ou changer de point de vue ?",
+            "Quelles situations de désaccord ou de confiance restent difficiles à éclaircir ?",
+            "Quel échange ou quelle coopération pourrais-tu expérimenter différemment ?"
+        ],
+        "summaryIntro": "Distingue ce que tu fais réellement dans tes relations de ce que tu aimerais essayer autrement."
+    },
+    {
+        "id": 6,
+        "short": "Ma synthèse personnelle",
+        "title": "Ce que je comprends de moi",
+        "tag": "PRENDRE DU RECUL",
+        "color": "violet",
+        "minutes": "15–20 min",
+        "lead": "Tu peux maintenant rapprocher les idées des autres missions : ce qui te motive, ce qui compte pour toi, ce que tu apprends et ce qui te soutient. Rien n'est définitif.",
+        "thought": "Ce bilan n’est ni un diagnostic ni une note. Tes réponses pourront changer dans quelques semaines, et c’est normal.",
+        "challenge": "Quelle serait une petite expérience concrète qui te permettrait de vérifier une de tes idées ?",
+        "questions": [
+            {
+                "id": "q13",
+                "title": "Quelles idées reviennent lorsque tu rapproches tes motivations, tes priorités et tes méthodes ?",
+                "hint": "Tu peux retrouver des points communs ou des contradictions. Les deux sont intéressants.",
+                "help": "Quelles réponses précises des autres missions t'ont fait remarquer ces liens ?"
+            },
+            {
+                "id": "q14",
+                "title": "Quelles ressources pourrais-tu mobiliser pour construire une suite qui te ressemble ?",
+                "hint": "Pense à tes compétences, à tes habitudes, aux personnes qui t'aident et aux choses que tu voudrais encore apprendre.",
+                "help": "Qu'est-ce que tu sais déjà faire et sur quels exemples t'appuies-tu ?"
+            },
+            {
+                "id": "q15",
+                "title": "Quelle question sur ton avenir aimerais-tu vérifier par une petite expérience concrète ?",
+                "hint": "Pas besoin de choisir un métier maintenant : trouve un essai réaliste et sans enjeu définitif.",
+                "help": "Que pourrais-tu faire, observer puis noter pour en tirer une conclusion provisoire ?"
+            }
+        ],
+        "chatFocus": "une synthèse des cinq premières missions, des points communs et des contradictions à explorer, sans me définir définitivement",
+        "hex": "#bd93ff",
+        "summaryHints": [
+            "Quels points communs observes-tu entre tes motivations, tes valeurs et tes façons d'agir ?",
+            "Sur quelles ressources réelles pourrais-tu t'appuyer pour explorer ton avenir ?",
+            "Quelles hypothèses sur toi restent incertaines, contradictoires ou à nuancer ?",
+            "Quelle expérience simple et réaliste pourrais-tu mener pour vérifier une idée importante ?"
+        ],
+        "summaryIntro": "Mets en relation les cinq premières missions, et sépare les constats fondés sur des exemples de tes hypothèses."
     }
-  ];
+];
   const allQuestions = stages.flatMap(s => s.questions);
   const ids = new Set(allQuestions.map(q => q.id));
   const app = document.getElementById('app');
@@ -478,7 +701,15 @@ body.is-installed #install-app{display:none}
   let promptStage = 1;
   let promptMode = 'stage';
 
-  function emptyState() { return { version: 2, answers: {}, summaries: {}, final: {}, created: new Date().toISOString(), updated: null }; }
+  const priorityOptions = [
+    {title:'Être indépendant',description:'Décider de mon organisation'},
+    {title:"Gagner de l'argent",description:'Avoir des moyens financiers'},
+    {title:'Avoir du temps libre',description:'Profiter de mes loisirs'},
+    {title:'Être en sécurité',description:'Avoir une situation stable'},
+    {title:'Créer des choses',description:'Développer mes propres idées'},
+    {title:'Être utile',description:'Apporter quelque chose aux autres'}
+  ];
+  function emptyState() { return { version: 3, answers: {}, priorities: [], summaries: {}, final: {}, created: new Date().toISOString(), updated: null }; }
   const summaryFields = [
     {id:'learned', label:'Ce que j’ai compris sur moi', hint:'Qu’est-ce que ces questions t’ont fait comprendre ou remarquer ?'},
     {id:'strengths', label:'Mes forces et mes ressources', hint:'Quels exemples montrent ce que tu sais faire ou ce qui t’aide ?'},
@@ -497,21 +728,30 @@ body.is-installed #install-app{display:none}
     data.approved=obj.approved===true;
     return data;
   }
-  function readState() {
-    const empty=emptyState();
-    try {
-      const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if(saved && (saved.version===1 || saved.version===2) && saved.answers && typeof saved.answers==='object' && !Array.isArray(saved.answers)) {
-        empty.answers=Object.fromEntries(Object.entries(saved.answers).filter(([k,v])=>ids.has(k)&&typeof v==='string'));
-        if(saved.version===2) {
-          if(saved.summaries&&typeof saved.summaries==='object') for(const st of stages)empty.summaries[st.id]=cleanSummary(saved.summaries[st.id]);
-          if(saved.final&&typeof saved.final==='object')for(const f of finalFields)if(typeof saved.final[f.id]==='string')empty.final[f.id]=saved.final[f.id].slice(0,50000);
+  function migrateSaved(saved) {
+    if (!saved || ![1,2,3].includes(saved.version) || !saved.answers || typeof saved.answers!=='object' || Array.isArray(saved.answers)) return null;
+    const next=emptyState();
+    for(const [id,value] of Object.entries(saved.answers)) if(ids.has(id)&&typeof value==='string'&&value.length<=50000)next.answers[id]=value;
+    if(saved.version>=2){
+      // Dans la V4, les synthèses 2–5 appartenaient aux thèmes devenus missions 3–6.
+      const legacyMap={1:1,2:3,3:4,4:5,5:6};
+      if(saved.summaries&&typeof saved.summaries==='object'){
+        for(const st of stages){
+          const oldId=saved.version===3?st.id:Number(Object.keys(legacyMap).find(k=>legacyMap[k]===st.id));
+          if(Number.isInteger(oldId)&&saved.summaries[oldId])next.summaries[st.id]=cleanSummary(saved.summaries[oldId]);
         }
-        empty.created=typeof saved.created==='string'?saved.created:empty.created;
-        empty.updated=typeof saved.updated==='string'?saved.updated:null;
       }
-    } catch(e) { /* stockage impossible ou sauvegarde invalide */ }
-    return empty;
+      if(saved.final&&typeof saved.final==='object')for(const f of finalFields)if(typeof saved.final[f.id]==='string')next.final[f.id]=saved.final[f.id].slice(0,50000);
+    }
+    if(saved.version===3&&Array.isArray(saved.priorities))
+      next.priorities=[...new Set(saved.priorities.filter(p=>priorityOptions.some(o=>o.title===p)))].slice(0,3);
+    next.created=typeof saved.created==='string'?saved.created:next.created;
+    next.updated=typeof saved.updated==='string'?saved.updated:null;
+    return next;
+  }
+  function readState() {
+    try {return migrateSaved(JSON.parse(localStorage.getItem(STORAGE_KEY))) || emptyState();}
+    catch(e) {return emptyState();}
   }
   function getSummary(id) { return state.summaries[id] || (state.summaries[id]=cleanSummary(null)); }
   function approvedCount(){return stages.filter(st=>getSummary(st.id).approved).length;}
@@ -535,34 +775,34 @@ body.is-installed #install-app{display:none}
     const parts=window.location.hash.replace(/^#\/?/,'').split('/');
     const allowed=['accueil','mission','carnet','bilan'];
     const page=allowed.includes(parts[0]) ? parts[0] : 'accueil';
-    const stage = Math.min(5, Math.max(1, parseInt(parts[1],10)||1));
+    const stage = Math.min(stages.length, Math.max(1, parseInt(parts[1],10)||1));
     currentPage=page; currentStage=stage;
     renderNav();
     if (page==='mission') renderMission(stage);
     else if (page==='carnet') renderCarnet();
     else if (page==='bilan') renderBilan();
     else renderHome();
-    document.getElementById('breadcrumb').innerHTML=page==='accueil' ? 'MON CAP <span>/</span> VUE D’ENSEMBLE' : page==='carnet' ? 'MON CAP <span>/</span> MON CARNET' : page==='bilan' ? 'MON CAP <span>/</span> MON BILAN' : `MON CAP <span>/</span> MISSION 01 <span>/</span> ÉTAPE ${String(stage).padStart(2,'0')}`;
+    document.getElementById('breadcrumb').innerHTML=page==='accueil' ? 'MON CAP <span>/</span> VUE D’ENSEMBLE' : page==='carnet' ? 'MON CAP <span>/</span> MON CARNET' : page==='bilan' ? 'MON CAP <span>/</span> MON BILAN' : `MON CAP <span>/</span> MISSION ${String(stage).padStart(2,'0')}`;
     closeMobile();
     window.scrollTo({top:0,behavior:'instant'});
   }
   function renderNav() {
-    stageNav.innerHTML=stages.map(s=>`<button class="nav-stage ${currentPage==='mission'&&currentStage===s.id?'active':''}" data-stage="${s.id}"><span class="nav-stage-num">${String(s.id).padStart(2,'0')}</span><span class="nav-stage-name">${esc(s.short)}</span><span class="nav-stage-bullet ${(getSummary(s.id).approved||countAnswers(s)===3)?'filled':''}"></span></button>`).join('');
+    stageNav.innerHTML=stages.map(s=>`<button style="--item-color:${s.hex}" class="nav-stage ${currentPage==='mission'&&currentStage===s.id?'active':''}" data-stage="${s.id}"><span class="nav-stage-num">${String(s.id).padStart(2,'0')}</span><span class="nav-stage-name">${esc(s.short)}</span><span class="nav-stage-bullet ${(getSummary(s.id).approved||countAnswers(s)===3)?'filled':''}"></span></button>`).join('');
     document.getElementById('sidebar-response-count').textContent = String(countAnswers());
     document.querySelectorAll('.side-main').forEach(b=>b.classList.toggle('active',b.dataset.go===currentPage));
   }
   function renderHome() {
     const answered = countAnswers();
-    const stageCount = stages.filter(s => countAnswers(s) > 0).length;
+    const stageCount = stages.filter(s => countAnswers(s) > 0 || (s.id===2&&state.priorities.length>0)).length;
     const firstStep = answered ? nextIncompleteStage() : 1;
     const percent = Math.round(answered / allQuestions.length * 100);
     app.innerHTML = `<div class="home-view page-in">
-      <div class="topline"><span><span class="tiny-square"></span> TON ESPACE PERSONNEL</span><span>PARCOURS / 01 SUR 06</span></div>
+      <div class="topline"><span><span class="tiny-square"></span> TON ESPACE PERSONNEL</span><span>PARCOURS / 06 MISSIONS</span></div>
       <section class="hero hero-v2" aria-labelledby="home-title">
         <div class="hero-content">
           <div class="hero-kicker"><span class="kicker-line"></span> MON PROJET PERSONNEL</div>
           <h1 id="home-title">Construire<br><em>ma liberté</em><span class="hero-dot">.</span></h1>
-          <p>Tu n’as pas besoin de décider de ton avenir aujourd’hui. Commence par une première étape de trois questions ouvertes : tu écris librement, puis tu avances à ton rythme.</p>
+          <p>Tu n’as pas besoin de décider de ton avenir aujourd’hui. Explore six missions pour mieux te connaître : trois questions par mission, une discussion avec ChatGPT, puis une synthèse dans tes propres mots.</p>
           <div class="hero-actions"><button class="btn btn-lime btn-big" data-go="mission" data-step="${firstStep}">${answered ? 'Continuer ma réflexion' : 'Commencer la mission'} <span aria-hidden="true">↗</span></button><span class="hero-small-note">À ton rythme, sans note ni jugement.</span></div>
         </div>
         <div class="hero-decor hero-decor-v2" aria-hidden="true"><div class="hero-ring ring-one"></div><div class="hero-ring ring-two"></div><div class="hero-compass">✳</div><div class="hero-map-label">TA DIRECTION SE CONSTRUIT</div></div>
@@ -570,14 +810,14 @@ body.is-installed #install-app{display:none}
       </section>
       <section class="install-feature"><div class="install-feature-icon">↗</div><div><span class="feature-eyebrow">TON PARCOURS, DANS TA POCHE</span><h2>MON CAP te suit, même hors ligne.</h2><p>Ajoute l’application à l’écran d’accueil de ton téléphone. Tes réponses restent sur cet appareil : pense à garder une sauvegarde personnelle.</p></div><button type="button" class="btn btn-install" data-install-help>Installer l’app <span aria-hidden="true">↗</span></button></section>
       ${backupReminder()}
-      <section class="dashboard-head"><div><div class="eyebrow color-muted">LE POINT SUR TON PARCOURS</div><h2>Tu avances <span>à ta manière.</span></h2></div><span class="pill-light">MISSION 01 / 06</span></section>
+      <section class="dashboard-head"><div><div class="eyebrow color-muted">LE POINT SUR TON PARCOURS</div><h2>Tu avances <span>à ta manière.</span></h2></div><span class="pill-light">PARCOURS / 06 MISSIONS</span></section>
       <div class="home-grid">
-        <article class="progress-card"><div class="card-label">TON EXPLORATION</div><div class="progress-count"><strong>${answered}</strong><span>/ ${allQuestions.length} questions</span></div><div class="stat-line" role="progressbar" aria-label="Questions auxquelles tu as commencé à répondre" aria-valuenow="${answered}" aria-valuemin="0" aria-valuemax="${allQuestions.length}"><div class="stat-fill" style="width:${percent}%"></div></div><div class="progress-details"><span>${stageCount} étape${stageCount > 1 ? 's' : ''} explorée${stageCount > 1 ? 's' : ''} sur 5</span><span>${percent} % des questions commencées</span></div><p>Ce suivi indique seulement les questions commencées. Ce n’est pas un score, et tu peux changer tes réponses à tout moment.</p></article>
+        <article class="progress-card"><div class="card-label">TON EXPLORATION</div><div class="progress-count"><strong>${answered}</strong><span>/ ${allQuestions.length} questions</span></div><div class="stat-line" role="progressbar" aria-label="Questions auxquelles tu as commencé à répondre" aria-valuenow="${answered}" aria-valuemin="0" aria-valuemax="${allQuestions.length}"><div class="stat-fill" style="width:${percent}%"></div></div><div class="progress-details"><span>${stageCount} mission${stageCount > 1 ? 's' : ''} explorée${stageCount > 1 ? 's' : ''} sur 6</span><span>${percent} % des questions commencées</span></div><p>Ce suivi indique seulement les questions commencées. Ce n’est pas un score, et tu peux changer tes réponses à tout moment.</p></article>
         <article class="quote-card"><span class="quote-icon" aria-hidden="true">✳</span><div class="card-label">À GARDER EN TÊTE</div><blockquote>« Je peux avoir mes propres idées <em>et</em> continuer à apprendre des autres. »</blockquote><span class="quote-foot">PRENDRE DU RECUL, C’EST AUSSI AVANCER.</span></article>
       </div>
-      <div class="section-title-row"><div><div class="eyebrow color-muted">MISSION 01 · COMMENT JE FONCTIONNE</div><h2>Cinq étapes pour <span>mieux te connaître.</span></h2></div><span>Explore-les dans l’ordre que tu préfères ↓</span></div>
-      <div class="home-stages">${stages.map((s,i)=>`<button class="step-card step-${s.color}" data-stage="${s.id}" aria-label="Étape ${i+1} : ${esc(s.title)}"><span class="step-index">ÉTAPE ${String(i+1).padStart(2,'0')} <span>/ 05</span></span><div class="step-deco" aria-hidden="true">${['✳','⌘','↗','◇','◎'][i]}</div><h3>${esc(s.short)}</h3><p>${esc(s.title)}</p><div class="step-card-bottom"><span>${getSummary(s.id).approved?'Synthèse relue ✓':(countAnswers(s)+'/3 réponses commencées')}</span><span aria-hidden="true">↗</span></div></button>`).join('')}</div>
-      <section class="workflow-intro"><div class="eyebrow color-blue">COMMENT ÇA MARCHE ?</div><h2>Une vraie boucle de réflexion.</h2><div class="workflow-grid"><div><strong>01</strong> J’écris librement</div><div><strong>02</strong> J’échange si je veux</div><div><strong>03</strong> Je formule ma synthèse</div><div><strong>04</strong> Je la valide moi-même</div></div><button class="btn btn-ghost" data-go="bilan">Voir mon bilan de mission ↗</button><p>Les échanges ChatGPT restent facultatifs. C’est toi qui décides de ce que tu retiens et de ce que tu partages.</p></section><div class="soft-note"><span aria-hidden="true">◎</span> <p><strong>Un espace privé, pas un examen.</strong> Tes réponses restent dans ton navigateur. Tu es libre de les relire, de les modifier et de décider si tu veux les partager. Pense à sauvegarder ton carnet.</p></div>
+      <div class="section-title-row"><div><div class="eyebrow color-muted">MON CAP · SIX MISSIONS</div><h2>Six missions pour <span>mieux te connaître.</span></h2></div><span>Explore-les dans l’ordre que tu préfères ↓</span></div>
+      <div class="home-stages">${stages.map((s,i)=>`<button class="step-card step-${s.color}" data-stage="${s.id}" aria-label="Mission ${i+1} : ${esc(s.title)}" style="--accent:${s.hex}"><span class="step-index">MISSION ${String(i+1).padStart(2,'0')} <span>/ 06</span></span><div class="step-deco" aria-hidden="true">${['✳','◇','⌘','↗','◎','✦'][i]}</div><h3>${esc(s.short)}</h3><p>${esc(s.title)}</p><div class="step-card-bottom"><span>${getSummary(s.id).approved?'Synthèse relue ✓':(countAnswers(s)+'/3 réponses commencées')}</span><span aria-hidden="true">↗</span></div></button>`).join('')}</div>
+      <section class="workflow-intro"><div class="eyebrow color-blue">COMMENT ÇA MARCHE ?</div><h2>Une vraie boucle de réflexion.</h2><div class="workflow-grid"><div><strong>01</strong> J’écris librement</div><div><strong>02</strong> J’approfondis avec ChatGPT</div><div><strong>03</strong> Je formule ma synthèse</div><div><strong>04</strong> Je la valide moi-même</div></div><button class="btn btn-ghost" data-go="bilan">Voir mon bilan de mission ↗</button><p>L’échange avec ChatGPT aide à approfondir tes idées. Tu choisis ce que tu partages et ce que tu souhaites retenir.</p></section><div class="soft-note"><span aria-hidden="true">◎</span> <p><strong>Un espace privé, pas un examen.</strong> Tes réponses restent dans ton navigateur. Tu es libre de les relire, de les modifier et de décider si tu veux les partager. Pense à sauvegarder ton carnet.</p></div>
     </div>`;
     attachNavHandlers();
   }
@@ -588,20 +828,32 @@ body.is-installed #install-app{display:none}
     if (time && Date.now() - time < 7*24*3600*1000) return '';
     return `<div class="backup-reminder"><span>◈</span><p><strong>Une minute pour protéger ton travail.</strong> Les réponses sont sur cet appareil uniquement. Fais une copie de ton carnet dans Fichiers ou ailleurs, à un emplacement privé.</p><button class="btn btn-ghost" data-go="carnet">Sauvegarder ↗</button></div>`;
   }
-  function nextIncompleteStage() { return stages.find(s=>countAnswers(s)<3)?.id || 5; }
+  function nextIncompleteStage() { return stages.find(s=>countAnswers(s)<3)?.id || 6; }
+  function renderPriorityPanel(){
+    const chosen=state.priorities;
+    return `<section class="priorities-panel" aria-labelledby="priorities-title">
+      <div class="priorities-top"><span>MISSION 02 — MES PRIORITÉS</span><strong id="priorities-count">${chosen.length}/3</strong></div>
+      <h2 id="priorities-title">Qu'est-ce qui compte pour moi ?</h2>
+      <p>Parmi ces six propositions, choisis les trois qui te semblent les plus importantes pour ton avenir. Tu peux changer d'avis à tout moment.</p>
+      <div class="priorities-grid">${priorityOptions.map(o=>`<button type="button" class="priority-choice ${chosen.includes(o.title)?'chosen':''}" data-priority="${esc(o.title)}" aria-pressed="${chosen.includes(o.title)}"><span class="priority-circle" aria-hidden="true">${chosen.includes(o.title)?'✓':''}</span><strong>${esc(o.title)}</strong><small>${esc(o.description)}</small></button>`).join('')}</div>
+      <p class="priority-hint" id="priorities-hint">${chosen.length===3?'Tes trois choix sont enregistrés. Tu peux maintenant expliquer pourquoi.':'Sélectionne jusqu’à trois propositions pour explorer tes priorités.'}</p>
+    </section>`;
+  }
   function renderMission(num) {
     const s=stages[num-1];
     app.innerHTML=`<div class="mission-view page-in accent-${s.color}">
-      <div class="topline"><span><span class="tiny-square"></span> MISSION 01 / COMMENT JE FONCTIONNE</span><span>ÉTAPE ${String(num).padStart(2,'0')} / 05</span></div>
-      <section class="mission-hero"><div class="mission-top"><span class="tag"><span class="tag-dot"></span> ${s.tag}</span><span class="mini-time">◷ ${s.minutes}, si tu veux</span></div><div class="mission-hero-main"><div><div class="eyebrow">ÉTAPE ${String(num).padStart(2,'0')} — 05</div><h1>${esc(s.title)}<span class="headline-period">.</span></h1><p>${esc(s.lead)}</p></div><span class="mission-glyph" aria-hidden="true">${['✳','⌘','↗','◇','◎'][num-1]}</span></div>
-      <div class="step-meter" role="list" aria-label="Étapes de la mission">${stages.map((x,i)=>`<button aria-label="Aller à l’étape ${i+1}" title="Étape ${i+1}: ${esc(x.short)}" class="meter-segment ${x.id===num?'now':''} ${countAnswers(x)===3?'done':''}" data-stage="${x.id}"></button>`).join('')}</div></section>
+      <div class="topline"><span><span class="tiny-square"></span> MON CAP / ${esc(s.short.toUpperCase())}</span><span>MISSION ${String(num).padStart(2,'0')} / 06</span></div>
+      <section class="mission-hero"><div class="mission-top"><span class="tag"><span class="tag-dot"></span> ${esc(s.tag)}</span><span class="mini-time">◷ ${s.minutes} environ</span></div>
+      <div class="mission-hero-main"><div><div class="eyebrow">MISSION ${String(num).padStart(2,'0')} — 06</div><h1>${esc(s.title)}<span class="headline-period">.</span></h1><p class="mission-lead">${esc(s.lead)}</p></div><span class="mission-glyph" aria-hidden="true">${['✳','◇','⌘','↗','◎','✦'][num-1]}</span></div>
+      <div class="step-meter" role="group" aria-label="Les six missions">${stages.map(x=>`<button aria-label="Aller à la mission ${x.id} : ${esc(x.short)}" title="Mission ${x.id}: ${esc(x.short)}" class="meter-segment ${x.id===num?'now':''} ${countAnswers(x)===3?'done':''}" data-stage="${x.id}" style="--segment-color:${x.hex}"></button>`).join('')}</div></section>
       <div class="mission-layout"><div class="questions-area">
+      ${num===2?renderPriorityPanel():''}
       <div class="questions-kicker"><span>À TOI DE JOUER</span><span>${countAnswers(s)} / 3 réponses commencées</span></div><h2>Prends le temps de formuler tes idées.</h2><p class="questions-intro">Écris comme tu parles. Quelques lignes suffisent pour commencer. Tu peux laisser des questions de côté et revenir plus tard.</p>
       ${s.questions.map((q,i)=>`<section class="question-card" aria-labelledby="question-${q.id}"><div class="question-head"><span class="question-number">${String(i+1).padStart(2,'0')}</span><span class="question-kind">QUESTION OUVERTE</span></div><h3 id="question-${q.id}">${esc(q.title)}</h3><p>${esc(q.hint)}</p><label for="${q.id}" class="sr-only">${esc(q.title)}</label><textarea class="answer" id="${q.id}" data-answer="${q.id}" placeholder="Écris ta réponse ici… Personne ne te note." rows="5" spellcheck="true">${esc(state.answers[q.id]||'')}</textarea><div class="question-bottom"><details><summary>✦ Une piste pour aller plus loin</summary><p>${esc(q.help)}</p></details><span class="word-count" data-count="${q.id}">${wordCount(state.answers[q.id]||'')} mot${wordCount(state.answers[q.id]||'')>1?'s':''}</span></div></section>`).join('')}
       ${renderSummaryPanel(num)}
-      <div class="mission-bottom-actions"><button class="btn btn-ghost" id="prev-stage" ${num===1?'disabled':''}>← Étape précédente</button><button class="btn btn-lime" id="next-stage">${num===5?'Voir mon bilan':'Étape suivante'} ↗</button></div>
+      <div class="mission-bottom-actions"><button class="btn btn-ghost" id="prev-stage" ${num===1?'disabled':''}>← Mission précédente</button><button class="btn btn-lime" id="next-stage">${num===6?'Voir mon bilan':'Mission suivante'} ↗</button></div>
       </div><aside class="context-column"><div class="context-card context-highlight"><div class="eyebrow">✳ PETIT RAPPEL</div><p>${esc(s.thought)}</p></div><div class="context-card context-challenge"><div class="eyebrow">POUR CHANGER DE POINT DE VUE</div><p>${esc(s.challenge)}</p><small>Tu peux simplement y réfléchir, sans écrire de réponse.</small></div><div class="context-card context-ai"><div class="context-ai-icon">↗</div><div class="eyebrow">UN PEU PLUS LOIN ?</div><h3>Approfondis, puis garde ce qui te parle.</h3><p>ChatGPT peut te questionner et proposer une synthèse. À toi de la corriger avant de la conserver.</p><button class="btn btn-blue btn-full" id="launch-chat">Approfondir avec ChatGPT ↗</button><small>Rien n’est envoyé automatiquement.</small></div></aside></div>
-      <div class="mission-endnote">MON CAP / MISSION 01 <span>Tu as le droit de changer d'avis.</span></div>
+      <div class="mission-endnote">MON CAP / MISSION ${String(num).padStart(2,'0')} <span>Tu as le droit de changer d'avis.</span></div>
     </div>`;
     attachNavHandlers();
     app.querySelectorAll('[data-answer]').forEach(field=>{
@@ -613,22 +865,35 @@ body.is-installed #install-app{display:none}
         store();
         resizeTextarea(field);
         const wc=wordCount(field.value); app.querySelector(`[data-count="${field.dataset.answer}"]`).textContent=`${wc} mot${wc>1?'s':''}`;
-        const counter=app.querySelector('.questions-kicker span:last-child'); counter.textContent=`${countAnswers(s)} / 3 réponses commencées`;
+        app.querySelector('.questions-kicker span:last-child').textContent=`${countAnswers(s)} / 3 réponses commencées`;
         renderNav();
       });
     });
+    app.querySelectorAll('[data-priority]').forEach(button=>button.addEventListener('click',()=>{
+      const name=button.dataset.priority;
+      state.priorities=state.priorities.includes(name)?state.priorities.filter(p=>p!==name):state.priorities.length<3?[...state.priorities,name]:state.priorities;
+      app.querySelectorAll('[data-priority]').forEach(btn=>{
+        const checked=state.priorities.includes(btn.dataset.priority);
+        btn.classList.toggle('chosen',checked);btn.setAttribute('aria-pressed',String(checked));
+        btn.querySelector('.priority-circle').textContent=checked?'✓':'';
+      });
+      document.getElementById('priorities-count').textContent=state.priorities.length+'/3';
+      document.getElementById('priorities-hint').textContent=state.priorities.length===3?'Tes trois choix sont enregistrés. Tu peux maintenant expliquer pourquoi.':'Sélectionne jusqu’à trois propositions pour explorer tes priorités.';
+      if(getSummary(num).approved){getSummary(num).approved=false;const cb=document.getElementById(`approve-${num}`);if(cb)cb.checked=false;showApprovalStatus(num);}
+      store();renderNav();
+    }));
     document.getElementById('launch-chat').addEventListener('click',()=>openChat(num));
     setupSummaryPanel(num);
     document.getElementById('prev-stage').addEventListener('click',()=>navigate('mission',num-1));
-    document.getElementById('next-stage').addEventListener('click',()=>num===5?navigate('bilan'):navigate('mission',num+1));
+    document.getElementById('next-stage').addEventListener('click',()=>num===6?navigate('bilan'):navigate('mission',num+1));
   }
   function renderSummaryPanel(num){
-    const d=getSummary(num);
+    const d=getSummary(num),s=stages[num-1];
     return `<section class="reflection-workflow" id="reflexion-${num}" aria-labelledby="summary-heading">
-      <div class="reflection-head"><span class="eyebrow color-blue">APRÈS LES QUESTIONS · RETOUR SUR MOI</span><h2 id="summary-heading">Ce que j’en retiens<span class="headline-period">.</span></h2><p>Tu peux approfondir avec ChatGPT, ou passer directement à ta synthèse. L’IA peut suggérer des idées, mais c’est toi qui décides ce qui est juste pour toi.</p></div>
-      <div class="reflection-guide"><div><span>01</span><strong>Mes réponses</strong><small>Je réfléchis et j’écris.</small></div><div><span>02</span><strong>Une conversation</strong><small>Avec ChatGPT, si je veux.</small></div><div><span>03</span><strong>Ma synthèse</strong><small>Je reformule à ma manière.</small></div><div><span>04</span><strong>Ma validation</strong><small>Je relis sans me mettre une note.</small></div></div>
-      <div class="draft-zone"><div class="section-label-row"><h3>Mon brouillon, si j’ai utilisé ChatGPT</h3><span>FACULTATIF</span></div><p>À la fin de la discussion, demande une synthèse en quatre rubriques. Tu peux la coller ici pour la retravailler. Rien ne remonte automatiquement de ChatGPT.</p><label class="sr-only" for="draft-${num}">Brouillon ChatGPT à retravailler</label><textarea id="draft-${num}" data-summary="draft" rows="5" placeholder="Colle ici une proposition de synthèse, ou laisse ce champ vide…">${esc(d.draft)}</textarea><button type="button" class="btn btn-ghost" data-chat-stage="${num}">✦ Préparer mon échange avec ChatGPT ↗</button></div>
-      <div class="personal-synthesis"><div class="section-label-row"><h3>Ma propre synthèse</h3><span>EN MES MOTS</span></div><p>Tu peux t’inspirer de ton brouillon, ou écrire sans ChatGPT. Tu as le droit de laisser des espaces vides et de revenir plus tard.</p><div class="summary-grid">${summaryFields.map((f,i)=>`<div class="summary-field"><label for="summary-${num}-${f.id}"><span>${String(i+1).padStart(2,'0')}</span> ${esc(f.label)}</label><p>${esc(f.hint)}</p><textarea id="summary-${num}-${f.id}" data-summary="${f.id}" rows="4" placeholder="Ce que je pense aujourd’hui…">${esc(d[f.id])}</textarea></div>`).join('')}</div></div>
+      <div class="reflection-head"><span class="eyebrow color-blue">APRÈS LES QUESTIONS · RETOUR SUR MOI</span><h2 id="summary-heading">Ce que j’en retiens<span class="headline-period">.</span></h2><p>Après tes réponses, une conversation avec ChatGPT permet d'aller plus loin. Tu reformules ensuite avec tes propres mots ce qui te semble juste.</p></div>
+      <div class="reflection-guide"><div><span>01</span><strong>Mes réponses</strong><small>Je réfléchis et j’écris.</small></div><div><span>02</span><strong>Une conversation</strong><small>Avec ChatGPT, pour aller plus loin.</small></div><div><span>03</span><strong>Ma synthèse</strong><small>Je reformule à ma manière.</small></div><div><span>04</span><strong>Ma validation</strong><small>Je relis sans me mettre une note.</small></div></div>
+      <div class="draft-zone"><div class="section-label-row"><h3>Ma discussion avec ChatGPT</h3><span>ÉTAPE 02 · APPROFONDIR</span></div><p>À la fin de la discussion, demande une synthèse en quatre rubriques. Tu peux la coller ici pour la retravailler. Rien ne remonte automatiquement de ChatGPT.</p><button type="button" class="btn btn-chat-violet" data-chat-stage="${num}">✦ Préparer mon échange avec ChatGPT ↗</button><label class="draft-label" for="draft-${num}">Mon brouillon avec ChatGPT</label><textarea id="draft-${num}" data-summary="draft" rows="5" placeholder="Colle ici le brouillon proposé pendant la discussion…">${esc(d.draft)}</textarea></div>
+      <div class="personal-synthesis"><div class="section-label-row"><h3>Ma propre synthèse</h3><span>EN MES MOTS</span></div><p>${esc(s.summaryIntro)}</p><div class="summary-grid">${summaryFields.map((f,i)=>`<div class="summary-field"><label for="summary-${num}-${f.id}"><span>${String(i+1).padStart(2,'0')}</span> ${esc(f.label)}</label><p>${esc(s.summaryHints[i])}</p><textarea id="summary-${num}-${f.id}" data-summary="${f.id}" rows="4" placeholder="Ce que je pense aujourd’hui…">${esc(d[f.id])}</textarea></div>`).join('')}</div></div>
       <div class="approval-zone ${d.approved?'is-approved':''}"><label class="approval-check"><input type="checkbox" id="approve-${num}" ${d.approved?'checked':''}/><span><strong>Je relis et je valide cette synthèse pour le moment.</strong><small>Elle reste provisoire. Si je la modifie, je pourrai la valider de nouveau. Ce n’est ni une évaluation ni un diagnostic.</small></span></label><div class="approval-status" id="approval-status-${num}">${d.approved?'✓ Synthèse relue et validée':'Pas encore validée — tu peux avancer quand même.'}</div></div>
     </section>`;
   }
@@ -668,10 +933,10 @@ body.is-installed #install-app{display:none}
   function renderCarnet() {
     const answered=countAnswers();
     app.innerHTML=`<div class="carnet-view page-in"><div class="topline"><span><span class="tiny-square"></span> ESPACE PERSONNEL / RÉPONSES</span><span>EXPORTATION ET SAUVEGARDE</span></div>
-      <div class="carnet-hero"><div class="eyebrow color-pink">TON ESPACE DE RECUL</div><h1>Ton carnet<span class="headline-period">.</span></h1><p>Ce que tu as écrit jusqu’ici. Tu peux relire, modifier, exporter ou simplement garder ces réflexions pour toi.</p><div class="carnet-counters"><div><strong>${answered}</strong><small>réflexions commencées</small></div><div><strong>${stages.filter(s=>countAnswers(s)>0).length}</strong><small>étapes explorées</small></div><div><strong>${allQuestions.reduce((n,q)=>n+wordCount(state.answers[q.id]||''),0)}</strong><small>mots écrits</small></div></div></div>
+      <div class="carnet-hero"><div class="eyebrow color-pink">TON ESPACE DE RECUL</div><h1>Ton carnet<span class="headline-period">.</span></h1><p>Ce que tu as écrit jusqu’ici. Tu peux relire, modifier, exporter ou simplement garder ces réflexions pour toi.</p><div class="carnet-counters"><div><strong>${answered}</strong><small>réflexions commencées</small></div><div><strong>${stages.filter(s=>countAnswers(s)>0).length}</strong><small>missions explorées</small></div><div><strong>${allQuestions.reduce((n,q)=>n+wordCount(state.answers[q.id]||''),0)}</strong><small>mots écrits</small></div></div></div>
       <div class="carnet-toolbar"><div><h2>Mes réponses et synthèses</h2><p>Tu peux les revoir à tout moment.</p></div><div class="toolbar-actions"><button class="btn btn-ghost" id="export-markdown">↓ Exporter en texte</button><button class="btn btn-ghost" id="export-json">↓ Sauvegarde complète</button></div></div>
-      <div class="carnet-stage-list">${stages.map(s=>`<section class="carnet-section"><div class="carnet-section-top"><span class="carnet-number">${String(s.id).padStart(2,'0')}</span><div><h3>${esc(s.title)}</h3><p>${countAnswers(s)} / 3 réponses commencées</p></div><button class="btn-small-link" data-stage="${s.id}">Modifier ↗</button></div>${s.questions.map(q=>`<div class="answer-review"><div>${esc(q.title)}</div><p class="${!state.answers[q.id]?.trim()?'empty-answer':''}">${state.answers[q.id]?.trim()?esc(state.answers[q.id]).replace(/\n/g,'<br>'):'Pas encore de réponse — et ce n’est pas grave.'}</p></div>`).join('')}<div class="carnet-summary"><h4>${getSummary(s.id).approved?'✓ Synthèse validée':'Synthèse personnelle (en cours)'}</h4>${summaryFields.map(f=>`<div><strong>${esc(f.label)}</strong><p>${getSummary(s.id)[f.id]?.trim()?esc(getSummary(s.id)[f.id]).replace(/\n/g,'<br>'):'—'}</p></div>`).join('')}</div></section>`).join('')}</div>
-      <div class="carnet-bilan-link"><div><strong>Faire le point sur toute la mission</strong><p>Rassemble tes synthèses, puis prépare les idées à retenir.</p></div><button class="btn btn-lime" data-go="bilan">Voir mon bilan ↗</button></div><section class="backup-panel"><div><div class="eyebrow color-blue">TES RÉPONSES RESTENT À TOI</div><h2>Garde une copie de ton parcours.</h2><p>Les réponses sont enregistrées sur ce navigateur seulement. Pour les retrouver après un changement d’appareil ou un nettoyage du navigateur, télécharge une sauvegarde JSON que tu garderas dans un endroit privé.</p></div><div class="backup-actions"><button class="btn btn-lime" id="backup-json">↓ Télécharger ma sauvegarde</button><button class="btn btn-ghost" id="open-import">↑ Restaurer une sauvegarde</button></div></section>
+      <div class="carnet-stage-list">${stages.map(s=>`<section class="carnet-section"><div class="carnet-section-top"><span class="carnet-number">${String(s.id).padStart(2,'0')}</span><div><h3>${esc(s.title)}</h3><p>${countAnswers(s)} / 3 réponses commencées</p></div><button class="btn-small-link" data-stage="${s.id}">Modifier ↗</button></div>${s.id===2?`<div class="answer-review"><div>Mes trois priorités</div><p>${esc(state.priorities.join(', ')||'Pas encore de sélection')}</p></div>`:''}${s.questions.map(q=>`<div class="answer-review"><div>${esc(q.title)}</div><p class="${!state.answers[q.id]?.trim()?'empty-answer':''}">${state.answers[q.id]?.trim()?esc(state.answers[q.id]).replace(/\n/g,'<br>'):'Pas encore de réponse — et ce n’est pas grave.'}</p></div>`).join('')}<div class="carnet-summary"><h4>${getSummary(s.id).approved?'✓ Synthèse validée':'Synthèse personnelle (en cours)'}</h4>${summaryFields.map(f=>`<div><strong>${esc(f.label)}</strong><p>${getSummary(s.id)[f.id]?.trim()?esc(getSummary(s.id)[f.id]).replace(/\n/g,'<br>'):'—'}</p></div>`).join('')}</div></section>`).join('')}</div>
+      <div class="carnet-bilan-link"><div><strong>Faire le point sur tout mon parcours</strong><p>Rassemble tes synthèses, puis prépare les idées à retenir.</p></div><button class="btn btn-lime" data-go="bilan">Voir mon bilan ↗</button></div><section class="backup-panel"><div><div class="eyebrow color-blue">TES RÉPONSES RESTENT À TOI</div><h2>Garde une copie de ton parcours.</h2><p>Les réponses sont enregistrées sur ce navigateur seulement. Pour les retrouver après un changement d’appareil ou un nettoyage du navigateur, télécharge une sauvegarde JSON que tu garderas dans un endroit privé.</p></div><div class="backup-actions"><button class="btn btn-lime" id="backup-json">↓ Télécharger ma sauvegarde</button><button class="btn btn-ghost" id="open-import">↑ Restaurer une sauvegarde</button></div></section>
       <div class="destructive-area"><p>Besoin de repartir de zéro ? Cette action efface les réponses enregistrées sur cet appareil.</p><button id="reset-answers" class="reset-btn">Effacer mes réponses</button></div>
     </div>`;
     attachNavHandlers();
@@ -691,12 +956,12 @@ body.is-installed #install-app{display:none}
   }
   function renderBilan(){
     const ok=approvedCount();
-    app.innerHTML=`<div class="bilan-view page-in"><div class="topline"><span><span class="tiny-square"></span> MISSION 01 / BILAN PERSONNEL</span><span>JE CHOISIS CE QUE JE GARDE</span></div>
-      <section class="bilan-hero"><div class="eyebrow color-lime">PRENDRE DU RECUL</div><h1>Mon bilan<span class="headline-period">.</span></h1><p>Ce bilan rassemble tes réflexions sur la mission « Comment je fonctionne ». Il ne te définit pas : tu peux y revenir, modifier tes idées et garder des questions ouvertes.</p><div class="bilan-stat">${ok} synthèse${ok>1?'s':''} relue${ok>1?'s':''} sur 5 · aucune obligation de tout remplir</div></section>
+    app.innerHTML=`<div class="bilan-view page-in"><div class="topline"><span><span class="tiny-square"></span> MON CAP / BILAN PERSONNEL</span><span>JE CHOISIS CE QUE JE GARDE</span></div>
+      <section class="bilan-hero"><div class="eyebrow color-lime">PRENDRE DU RECUL</div><h1>Mon bilan<span class="headline-period">.</span></h1><p>Ce bilan rassemble tes réflexions sur les six missions. Il ne te définit pas : tu peux y revenir, modifier tes idées et garder des questions ouvertes.</p><div class="bilan-stat">${ok} synthèse${ok>1?'s':''} relue${ok>1?'s':''} sur 6 · aucune obligation de tout remplir</div></section>
       <div class="bilan-warning"><span>◎</span><p>Une synthèse est une photographie de ce que tu penses aujourd’hui, pas une vérité définitive. Seules celles que tu as validées pourront être proposées à ChatGPT, et seulement si tu choisis de les partager.</p></div>
-      <div class="bilan-recaps">${stages.map(st=>{const sum=getSummary(st.id);return `<article class="bilan-recap"><div class="bilan-recap-head"><span>ÉTAPE ${String(st.id).padStart(2,'0')}</span><strong>${esc(st.title)}</strong><small>${sum.approved?'✓ Relue':'En cours'}</small></div>${summaryFields.map(f=>sum[f.id]?.trim()?`<div class="bilan-quote"><b>${esc(f.label)}</b><p>${esc(sum[f.id]).replace(/\n/g,'<br>')}</p></div>`:'').join('')||'<p class="bilan-empty">Pas encore de synthèse personnelle.</p>'}<button class="btn-small-link" data-stage="${st.id}">Revenir à cette étape ↗</button></article>`}).join('')}</div>
-      <section class="bilan-personal"><div class="eyebrow color-pink">DERNIER REGARD</div><h2>Ce que je choisis de retenir</h2><p>Tu peux utiliser les idées qui reviennent, ou écrire tout autre chose. Ces réponses sont enregistrées dans ton carnet.</p><div class="summary-grid">${finalFields.map((f,i)=>`<div class="summary-field"><label for="final-${f.id}"><span>${String(i+1).padStart(2,'0')}</span> ${esc(f.label)}</label><p>${esc(f.hint)}</p><textarea id="final-${f.id}" data-final="${f.id}" rows="5" placeholder="Mes propres mots…">${esc(state.final[f.id]||'')}</textarea></div>`).join('')}</div><div class="bilan-actions"><button class="btn btn-blue" id="bilan-chat">✦ Approfondir ce bilan avec ChatGPT ↗</button><button class="btn btn-lime" id="bilan-export">↓ Exporter mon carnet</button></div><small>Le partage des synthèses avec ChatGPT est désactivé par défaut. Tu choisis ce que tu copies.</small></section>
-      <div class="mission-endnote">MON CAP / MISSION 01 <span>Tu restes libre de changer d’avis.</span></div></div>`;
+      <div class="bilan-recaps">${stages.map(st=>{const sum=getSummary(st.id);return `<article class="bilan-recap"><div class="bilan-recap-head"><span>MISSION ${String(st.id).padStart(2,'0')}</span><strong>${esc(st.title)}</strong><small>${sum.approved?'✓ Relue':'En cours'}</small></div>${summaryFields.map(f=>sum[f.id]?.trim()?`<div class="bilan-quote"><b>${esc(f.label)}</b><p>${esc(sum[f.id]).replace(/\n/g,'<br>')}</p></div>`:'').join('')||'<p class="bilan-empty">Pas encore de synthèse personnelle.</p>'}<button class="btn-small-link" data-stage="${st.id}">Revenir à cette mission ↗</button></article>`}).join('')}</div>
+      <section class="bilan-personal"><div class="eyebrow color-pink">DERNIER REGARD</div><h2>Ce que je choisis de retenir</h2><p>Tu peux utiliser les idées qui reviennent, ou écrire tout autre chose. Ces réponses sont enregistrées dans ton carnet.</p><div class="summary-grid">${finalFields.map((f,i)=>`<div class="summary-field"><label for="final-${f.id}"><span>${String(i+1).padStart(2,'0')}</span> ${esc(f.label)}</label><p>${esc(f.hint)}</p><textarea id="final-${f.id}" data-final="${f.id}" rows="5" placeholder="Mes propres mots…">${esc(state.final[f.id]||'')}</textarea></div>`).join('')}</div><div class="bilan-actions"><button class="btn btn-blue" id="bilan-chat">✦ Approfondir ce bilan avec ChatGPT ↗</button><button class="btn btn-lime" id="bilan-export">↓ Exporter mon carnet</button></div><small>Les synthèses personnelles relues sont proposées dans le message, que tu peux modifier avant de le copier.</small></section>
+      <div class="mission-endnote">MON CAP / PARCOURS <span>Tu restes libre de changer d’avis.</span></div></div>`;
     attachNavHandlers();
     app.querySelectorAll('[data-final]').forEach(el=>el.addEventListener('input',()=>{state.final[el.dataset.final]=el.value;store();}));
     document.getElementById('bilan-chat').addEventListener('click',openGlobalChat);
@@ -704,17 +969,18 @@ body.is-installed #install-app{display:none}
   }
   function makeMarkdown() {
     let md='# MON CAP — Mon carnet personnel\n\n';
-    md+='Mission 01 : Comment je fonctionne\n\n';
+    md+='Parcours en six missions\n\n';
     md+='Date d’export : '+new Date().toLocaleDateString('fr-FR')+'\n\n';
     md+='> Ce document contient des réflexions personnelles. Je choisis à qui je le montre.\n\n';
     for (const s of stages) {
       md+=`## ${String(s.id).padStart(2,'0')} — ${s.title}\n\n`;
+      if(s.id===2)md+='**Mes priorités sélectionnées :** '+(state.priorities.join(', ')||'À explorer')+'\n\n';
       for (const q of s.questions) md+=`### ${q.title}\n\n${(state.answers[q.id]||'').trim()||'_(Pas de réponse pour le moment.)_'}\n\n`;
       const sum=getSummary(s.id);
       md+=`### Ma synthèse personnelle (${sum.approved?'relue et validée':'en cours'})\n\n`;
       for(const f of summaryFields)md+=`**${f.label}**\n\n${sum[f.id]?.trim()||'_(À compléter si je le souhaite.)_'}\n\n`; 
     }
-    md+='## Bilan de la mission 01\n\n';
+    md+='## Bilan du parcours\n\n';
     for(const f of finalFields)md+=`### ${f.label}\n\n${(state.final[f.id]||'').trim()||'_(À compléter si je le souhaite.)_'}\n\n`;
     return md;
   }
@@ -740,58 +1006,61 @@ body.is-installed #install-app{display:none}
     try { localStorage.setItem('moncap_last_backup',String(Date.now())); } catch(e) {}
     toast('Téléchargement lancé. Vérifie que ton fichier est bien enregistré.');
   }
-  function downloadMarkdown() { download(makeMarkdown(),'mon-cap-mission-01.md','text/markdown;charset=utf-8'); }
+  function downloadMarkdown() { download(makeMarkdown(),'mon-cap-parcours.md','text/markdown;charset=utf-8'); }
   function downloadJSON() { download(JSON.stringify(state,null,2),'mon-cap-sauvegarde.json','application/json;charset=utf-8'); }
-  function makePrompt(stageId,withAnswers) {
+  function makePrompt(stageId) {
     const s=stages[stageId-1];
-    let p=`J’ai 16 ans. Je fais la mission 1 de mon parcours personnel « MON CAP », pour apprendre à mieux me connaître et réfléchir à mon avenir. Je suis à l’étape ${stageId}/5 : « ${s.title} ».\n\n`;
+    let p=`J'ai 16 ans. Je fais la mission ${stageId}/6 de mon parcours personnel « MON CAP » pour réfléchir à mon avenir. Son thème est « ${s.short} » : « ${s.title} ».\n\n`;
     p+=`Je voudrais explorer ${s.chatFocus}.\n\n`;
     p+='Je veux que tu m’aides à réfléchir, pas que tu décides à ma place. Pose-moi UNE question à la fois. Commence par comprendre ce que je pense avant de proposer des interprétations. Ne me félicite pas automatiquement. Quand j’affirme quelque chose, demande-moi un exemple ou sur quels faits je m’appuie. Si tu repères une contradiction, souligne-la avec tact. Ne fais pas de diagnostic de personnalité. Si je ne sais pas, aide-moi à trouver un exemple.\n';
-    if (withAnswers) {
-      const filled=s.questions.filter(q=>(state.answers[q.id]||'').trim());
-      if (filled.length) {
-        p+='\nVoici mes propres réponses actuelles :\n';
-        filled.forEach(q=>p+=`\nQuestion : ${q.title}\nMa réponse : ${(state.answers[q.id]||'').trim()}\n`);
-        p+='\nCes réponses sont provisoires et ne résument pas qui je suis.\n';
+    if(stageId===2 && state.priorities.length)p+='\nMes priorités sélectionnées actuellement : '+state.priorities.join(', ')+'. Elles peuvent encore changer.\n';
+    const filled=s.questions.filter(q=>(state.answers[q.id]||'').trim());
+    if(filled.length){
+      p+='\nVoici mes propres réponses actuelles :\n';
+      filled.forEach(q=>p+=`\nQuestion : ${q.title}\nMa réponse : ${(state.answers[q.id]||'').trim()}\n`);
+      p+='\nCes réponses sont provisoires et ne résument pas qui je suis.\n';
+    }
+    if(stageId===6){
+      const previous=stages.slice(0,5).filter(st=>getSummary(st.id).approved);
+      if(previous.length){
+        p+='\nVoici les synthèses que j’ai relues au cours des cinq autres missions :\n';
+        for(const st of previous){
+          p+=`\n### ${st.short}\n`;
+          for(const f of summaryFields)if(getSummary(st.id)[f.id].trim())p+=`${f.label} : ${getSummary(st.id)[f.id].trim()}\n`;
+        }
       }
     }
     p+='\nÀ la fin de notre échange, quand je le demanderai, propose un brouillon de synthèse en quatre parties : « Ce que j’ai compris sur moi », « Mes forces et mes ressources », « Les questions qui restent ouvertes », « Une idée à vérifier concrètement ». Sépare clairement MES idées de TES hypothèses et précise ce qui reste incertain. Je relirai et corrigerai ce brouillon avant de le coller dans MON CAP.\n\nPour commencer, pose-moi une seule question ouverte et concrète.';
     return p;
   }
-  function makeGlobalPrompt(withSummaries){
-    let text='J’ai 16 ans et je viens de travailler sur la première mission du parcours « MON CAP — Construire ma liberté », pour réfléchir à la façon dont je fonctionne.\n\n';
-    text+='Aide-moi à prendre du recul. Pose une seule question à la fois, distingue mes paroles de tes hypothèses, et ne tire pas de conclusions définitives sur ma personnalité. Cherche aussi les tensions entre mes idées sans me juger.\n';
-    if(withSummaries){
-      const shared=stages.filter(st=>getSummary(st.id).approved);
-      if(shared.length){
-        text+='\nVoici uniquement les synthèses personnelles que J’AI relues et choisi de partager :\n';
-        for(const st of shared){
-          text+=`\n### ${st.title}\n`;
-          const sum=getSummary(st.id);
-          for(const f of summaryFields) if(sum[f.id].trim()) text+=`${f.label} : ${sum[f.id].trim()}\n`;
-        }
-      } else text+='\nJe n’ai pas encore de synthèse validée à partager.\n';
-    }
-    text+='\nLorsque je te le demanderai, propose une synthèse nuancée en trois parties : « Ce que je comprends de mon fonctionnement », « Ce que je ne sais pas encore », « Ma prochaine petite expérience ». Je garderai le dernier mot et copierai seulement les idées qui me semblent justes dans mon carnet. Commence par une question ouverte.';
-    return text;
+  function makeGlobalPrompt(){
+    let p='J’ai 16 ans. Je viens de travailler sur six missions de réflexion personnelle dans « MON CAP — Construire ma liberté ».\n\n';
+    p+='Aide-moi à prendre du recul. Pose une seule question à la fois, distingue mes paroles de tes hypothèses, et ne tire pas de conclusions définitives sur ma personnalité. Cherche aussi les tensions entre mes idées sans me juger.\n';
+    const shared=stages.filter(st=>getSummary(st.id).approved);
+    if(shared.length){
+      p+='\nVoici les synthèses personnelles que J’AI relues :\n';
+      for(const st of shared){
+        p+=`\n### ${st.short}\n`;
+        const sum=getSummary(st.id);
+        for(const f of summaryFields)if(sum[f.id].trim())p+=`${f.label} : ${sum[f.id].trim()}\n`;
+      }
+    }else p+='\nJe n’ai pas encore de synthèse validée à partager.\n';
+    p+='\nLorsque je te le demanderai, propose une synthèse nuancée en trois parties : « Ce que je comprends de mon fonctionnement », « Ce que je ne sais pas encore », « Ma prochaine petite expérience ». Je garderai le dernier mot et copierai seulement les idées qui me semblent justes dans mon carnet. Commence par une question ouverte.';
+    return p;
   }
   function openGlobalChat(){
     promptMode='global';
     document.getElementById('dialog-title').textContent='Approfondir mon bilan';
-    document.getElementById('include-answers').checked=false;
-    document.getElementById('include-answers-label').textContent='Inclure mes synthèses personnelles déjà validées';
-    document.getElementById('prompt-preview').value=makeGlobalPrompt(false);
-    document.getElementById('dialog-tip').textContent='Copie le message, puis ouvre ChatGPT. Aucune donnée n’est envoyée automatiquement.';
+    document.getElementById('prompt-preview').value=makeGlobalPrompt();
+    document.getElementById('dialog-tip').textContent='Relis le message, puis copie-le pour l’ouvrir dans ChatGPT. Rien n’est envoyé automatiquement.';
     promptDialog.showModal();
   }
-  function openChat(num) {
+  function openChat(num){
     promptStage=num;
     promptMode='stage';
     document.getElementById('dialog-title').textContent='Approfondir avec ChatGPT';
-    document.getElementById('include-answers-label').textContent='Inclure mes réponses déjà écrites dans le message';
-    document.getElementById('include-answers').checked=false;
-    document.getElementById('prompt-preview').value=makePrompt(num,false);
-    document.getElementById('dialog-tip').textContent='Étape 1 : copie le message. Étape 2 : ouvre ChatGPT et colle-le dans une nouvelle conversation.';
+    document.getElementById('prompt-preview').value=makePrompt(num);
+    document.getElementById('dialog-tip').textContent='Étape 1 : relis et copie le message. Étape 2 : ouvre ChatGPT et colle-le dans une conversation.';
     promptDialog.showModal();
   }
   async function copyText(text) {
@@ -814,7 +1083,6 @@ body.is-installed #install-app{display:none}
       const side=document.getElementById('sidebar');const open=side.classList.toggle('mobile-open');document.getElementById('mobile-overlay').hidden=!open;document.getElementById('mobile-menu').setAttribute('aria-expanded',String(open));
     });
     document.getElementById('mobile-overlay').addEventListener('click',closeMobile);
-    document.getElementById('include-answers').addEventListener('change',e=>document.getElementById('prompt-preview').value=promptMode==='global'?makeGlobalPrompt(e.target.checked):makePrompt(promptStage,e.target.checked));
     document.getElementById('copy-prompt').addEventListener('click',async()=>{
       const ok=await copyText(document.getElementById('prompt-preview').value);
       document.getElementById('dialog-tip').textContent=ok?'✓ Message copié ! Ouvre ChatGPT, puis colle le texte dans une nouvelle conversation.':'Sélectionne le message ci-dessus et copie-le manuellement, puis ouvre ChatGPT.';
@@ -825,13 +1093,8 @@ body.is-installed #install-app{display:none}
       if (file.size>1500000) {msg.textContent='Le fichier est trop volumineux pour être un carnet MON CAP.';return;}
       try {
         const candidate=JSON.parse(await file.text());
-        if (!candidate || ![1,2].includes(candidate.version) || !candidate.answers || typeof candidate.answers!=='object' || Array.isArray(candidate.answers)) throw new Error('Format non reconnu.');
-        const cleaned=emptyState();cleaned.created=typeof candidate.created==='string'?candidate.created:cleaned.created;
-        for (const [id,value] of Object.entries(candidate.answers)) if(ids.has(id)&&typeof value==='string'&&value.length<50000) cleaned.answers[id]=value;
-        if(candidate.version===2){
-          if(candidate.summaries&&typeof candidate.summaries==='object')for(const st of stages)cleaned.summaries[st.id]=cleanSummary(candidate.summaries[st.id]);
-          if(candidate.final&&typeof candidate.final==='object')for(const f of finalFields)if(typeof candidate.final[f.id]==='string')cleaned.final[f.id]=candidate.final[f.id].slice(0,50000);
-        }
+        const cleaned=migrateSaved(candidate);
+        if(!cleaned)throw new Error('Format non reconnu.');
         if (!confirm('Remplacer les réponses enregistrées sur cet appareil par celles de la sauvegarde choisie ?')) return;
         state=cleaned;store();document.getElementById('import-dialog').close();route();toast('Ton carnet a été restauré.');
       } catch(e) { msg.textContent='Impossible de lire ce fichier comme une sauvegarde MON CAP valide.'; }
