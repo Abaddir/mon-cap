@@ -402,6 +402,7 @@ body.is-installed #install-app{display:none}
       <div class="sidebar-divider"></div>
       <button class="side-main" data-go="carnet"><span class="side-icon">▤</span> Mon carnet <span class="side-end" id="sidebar-response-count">0</span></button>
       <button class="side-main" data-go="bilan"><span class="side-icon">✳</span> Mon bilan <span class="side-end">↗</span></button>
+      <button class="side-main" data-go="explorer"><span class="side-icon">⌁</span> Explorer mon avenir <span class="side-end">↗</span></button>
       <div class="sidebar-bottom">
         <span class="side-bottom-kicker"><span class="pulse-dot"></span> TON ESPACE, TES RÈGLES</span>
         <p>Pas de note. Pas de bonne réponse. Juste des idées à explorer.</p>
@@ -420,7 +421,7 @@ body.is-installed #install-app{display:none}
         </div>
       </header>
       <main id="app" class="main-content" tabindex="-1"><noscript><section style="padding:26px;border:1px solid #ff9957;background:#192334;border-radius:16px"><h1>Activer JavaScript pour commencer</h1><p>Les questions de MON CAP sont interactives : ouvre ce fichier dans un navigateur autorisant JavaScript (Chrome, Firefox, Safari ou Edge).</p></section></noscript></main>
-      <footer class="footer"><span>MON CAP / VERSION 05.0 PWA</span><span>Prendre son temps, c'est aussi avancer.</span></footer>
+      <footer class="footer"><span>MON CAP / VERSION 05.1 PWA</span><span>Prendre son temps, c'est aussi avancer.</span></footer>
     </div>
   </div>
   <div class="mobile-overlay" id="mobile-overlay" hidden></div>
@@ -697,7 +698,6 @@ body.is-installed #install-app{display:none}
   const app = document.getElementById('app');
   const stageNav = document.getElementById('stage-nav');
   const promptDialog = document.getElementById('prompt-dialog');
-  let state = readState();
   let currentStage = 1;
   let currentPage = 'accueil';
   let toastTimer;
@@ -712,7 +712,18 @@ body.is-installed #install-app{display:none}
     {title:'Créer des choses',description:'Développer mes propres idées'},
     {title:'Être utile',description:'Apporter quelque chose aux autres'}
   ];
-  function emptyState() { return { version: 3, answers: {}, priorities: [], summaries: {}, final: {}, created: new Date().toISOString(), updated: null }; }
+  function emptyExploration(){return {draft:'',pistes:Array.from({length:3},()=>({title:'',why:'',training:'',activity:'',learned:''}))};}
+  function cleanExploration(raw){
+    const out=emptyExploration();
+    if(!raw||typeof raw!=='object'||Array.isArray(raw))return out;
+    if(typeof raw.draft==='string')out.draft=raw.draft.slice(0,50000);
+    if(Array.isArray(raw.pistes))for(let i=0;i<3;i++){
+      const p=raw.pistes[i];if(!p||typeof p!=='object'||Array.isArray(p))continue;
+      for(const k of Object.keys(out.pistes[i]))if(typeof p[k]==='string')out.pistes[i][k]=p[k].slice(0,15000);
+    }
+    return out;
+  }
+  function emptyState() { return { version:4, answers:{}, priorities:[], summaries:{}, final:{}, exploration:emptyExploration(), created:new Date().toISOString(), updated:null }; }
   const summaryFields = [
     {id:'learned', label:'Ce que j’ai compris sur moi', hint:'Qu’est-ce que ces questions t’ont fait comprendre ou remarquer ?'},
     {id:'strengths', label:'Mes forces et mes ressources', hint:'Quels exemples montrent ce que tu sais faire ou ce qui t’aide ?'},
@@ -732,7 +743,7 @@ body.is-installed #install-app{display:none}
     return data;
   }
   function migrateSaved(saved) {
-    if (!saved || ![1,2,3].includes(saved.version) || !saved.answers || typeof saved.answers!=='object' || Array.isArray(saved.answers)) return null;
+    if (!saved || ![1,2,3,4].includes(saved.version) || !saved.answers || typeof saved.answers!=='object' || Array.isArray(saved.answers)) return null;
     const next=emptyState();
     for(const [id,value] of Object.entries(saved.answers)) if(ids.has(id)&&typeof value==='string'&&value.length<=50000)next.answers[id]=value;
     if(saved.version>=2){
@@ -746,8 +757,9 @@ body.is-installed #install-app{display:none}
       }
       if(saved.final&&typeof saved.final==='object')for(const f of finalFields)if(typeof saved.final[f.id]==='string')next.final[f.id]=saved.final[f.id].slice(0,50000);
     }
-    if(saved.version===3&&Array.isArray(saved.priorities))
+    if(saved.version>=3&&Array.isArray(saved.priorities))
       next.priorities=[...new Set(saved.priorities.filter(p=>priorityOptions.some(o=>o.title===p)))].slice(0,3);
+    if(saved.version>=4)next.exploration=cleanExploration(saved.exploration);
     next.created=typeof saved.created==='string'?saved.created:next.created;
     next.updated=typeof saved.updated==='string'?saved.updated:null;
     return next;
@@ -756,6 +768,7 @@ body.is-installed #install-app{display:none}
     try {return migrateSaved(JSON.parse(localStorage.getItem(STORAGE_KEY))) || emptyState();}
     catch(e) {return emptyState();}
   }
+  let state=readState();
   function getSummary(id) { return state.summaries[id] || (state.summaries[id]=cleanSummary(null)); }
   function approvedCount(){return stages.filter(st=>getSummary(st.id).approved).length;}
   function store() {
@@ -776,7 +789,7 @@ body.is-installed #install-app{display:none}
   function navigate(page, stage) { window.location.hash = page==='mission' ? `#/mission/${stage || 1}` : `#/${page}`; }
   function route() {
     const parts=window.location.hash.replace(/^#\/?/,'').split('/');
-    const allowed=['accueil','mission','carnet','bilan'];
+    const allowed=['accueil','mission','carnet','bilan','explorer'];
     const page=allowed.includes(parts[0]) ? parts[0] : 'accueil';
     const stage = Math.min(stages.length, Math.max(1, parseInt(parts[1],10)||1));
     currentPage=page; currentStage=stage;
@@ -784,8 +797,9 @@ body.is-installed #install-app{display:none}
     if (page==='mission') renderMission(stage);
     else if (page==='carnet') renderCarnet();
     else if (page==='bilan') renderBilan();
+    else if (page==='explorer') renderExplorer();
     else renderHome();
-    document.getElementById('breadcrumb').innerHTML=page==='accueil' ? 'MON CAP <span>/</span> VUE D’ENSEMBLE' : page==='carnet' ? 'MON CAP <span>/</span> MON CARNET' : page==='bilan' ? 'MON CAP <span>/</span> MON BILAN' : `MON CAP <span>/</span> MISSION ${String(stage).padStart(2,'0')}`;
+    document.getElementById('breadcrumb').innerHTML=page==='accueil' ? 'MON CAP <span>/</span> VUE D’ENSEMBLE' : page==='carnet' ? 'MON CAP <span>/</span> MON CARNET' : page==='bilan' ? 'MON CAP <span>/</span> MON BILAN' : page==='explorer' ? 'MON CAP <span>/</span> EXPLORER MON AVENIR' : `MON CAP <span>/</span> MISSION ${String(stage).padStart(2,'0')}`;
     closeMobile();
     window.scrollTo({top:0,behavior:'instant'});
   }
