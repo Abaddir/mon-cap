@@ -380,6 +380,9 @@ body.is-installed #install-app{display:none}
 .carnet-number{color:var(--teal)}
 @media(max-width:600px){.priorities-grid{grid-template-columns:1fr}.priority-choice{min-height:120px}.priorities-panel{padding:17px}.draft-zone .btn-chat-violet{width:100%;text-align:center}}
 
+/* Phare discret ajouté au mot CAP : l’emblème et le slogan restent inchangés. */
+.brand-name{white-space:nowrap}
+.brand-name .brand-lighthouse{display:inline-block;width:18px;height:26px;margin-left:5px;vertical-align:-5px;overflow:visible;filter:drop-shadow(0 0 3px #d9ff4340)}
 </style>
 
 
@@ -390,7 +393,7 @@ body.is-installed #install-app{display:none}
     <aside class="sidebar" id="sidebar" aria-label="Navigation principale">
       <a href="#/accueil" class="brand" aria-label="MON CAP, accueil">
         <span class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span class="brand-name">MON<span>CAP</span><small>CONSTRUIRE MA LIBERTÉ</small></span>
+        <span class="brand-name">MON<span>CAP</span><svg class="brand-lighthouse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 38" aria-hidden="true" focusable="false"><path d="M9 7 14 2 19 7Z" fill="#f4f7ff"/><rect x="10" y="5.5" width="8" height="5" rx=".8" fill="#d9ff43"/><path d="M8 12h12" stroke="#f4f7ff" stroke-width="3" stroke-linecap="round"/><path d="M10 15h8l2.4 18H7.6Z" fill="#f4f7ff"/><path d="M10 21h8.2" stroke="#172434" stroke-width="3"/><path d="M9.4 27h9.2" stroke="#172434" stroke-width="3"/><path d="M6.5 35h15" stroke="#f4f7ff" stroke-width="3" stroke-linecap="round"/><path d="M21 7.5 27 6v5l-6-1.5Z" fill="#d9ff43" opacity=".72"/></svg><small>CONSTRUIRE MA LIBERTÉ</small></span>
       </a>
       <div class="side-section-label">PARCOURS PERSONNEL</div>
       <button class="side-main" data-go="accueil"><span class="side-icon">⌂</span> Vue d'ensemble <span class="side-end">↗</span></button>
