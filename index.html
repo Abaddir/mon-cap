@@ -383,6 +383,7 @@ body.is-installed #install-app{display:none}
 /* Phare discret ajouté au mot CAP : l’emblème et le slogan restent inchangés. */
 .brand-name{white-space:nowrap}
 .brand-name .brand-lighthouse{display:inline-block;width:18px;height:26px;margin-left:5px;vertical-align:-5px;overflow:visible;filter:drop-shadow(0 0 3px #d9ff4340)}
+.explore-page{max-width:1100px;margin:auto}.explore-hero,.explore-zone{border:1px solid #4a6283;border-radius:19px;background:linear-gradient(120deg,#223048,#1b273a);padding:clamp(20px,3vw,33px);margin-bottom:19px}.explore-hero h1{font:700 clamp(34px,5vw,55px) var(--heading);margin:15px 0}.explore-hero p,.explore-zone p{color:#bacce2;line-height:1.8;font-size:14px}.explore-hero strong{color:#d9ff43}.explore-zone h2{font:700 24px var(--heading)}.explore-zone textarea{width:100%;box-sizing:border-box;background:#101d2e;color:#fff;border:1px solid #506987;border-radius:11px;padding:13px;font:13px/1.6 var(--font);resize:vertical}.explore-zone textarea:focus{outline:2px solid #bb92ff}.explore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.explore-piste{padding:15px;border:1px solid #415574;border-radius:13px;background:#152338}.explore-piste label{display:block;font-size:12px;font-weight:700;color:#cfdaef;margin-top:13px}.explore-piste textarea{margin-top:6px}.explore-links{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.explore-links a{padding:10px 15px;border:1px solid #526f8e;border-radius:10px;color:#bcd8ff}.explore-teaser{display:flex;justify-content:space-between;align-items:center;gap:20px;border:1px solid #6d5d96;border-radius:17px;background:#28243d;padding:21px;margin:25px 0}.explore-teaser h2{font:700 23px var(--heading);margin:8px 0}.explore-teaser p{color:#bfcbe0;font-size:13px;line-height:1.7;max-width:680px}@media(max-width:950px){.explore-grid{grid-template-columns:1fr}.explore-teaser{display:block}}
 </style>
 
 
@@ -834,7 +835,7 @@ body.is-installed #install-app{display:none}
       </div>
       <div class="section-title-row"><div><div class="eyebrow color-muted">MON CAP · SIX MISSIONS</div><h2>Six missions pour <span>mieux te connaître.</span></h2></div><span>Explore-les dans l’ordre que tu préfères ↓</span></div>
       <div class="home-stages">${stages.map((s,i)=>`<button class="step-card step-${s.color}" data-stage="${s.id}" aria-label="Mission ${i+1} : ${esc(s.title)}" style="--accent:${s.hex}"><span class="step-index">MISSION ${String(i+1).padStart(2,'0')} <span>/ 06</span></span><div class="step-deco" aria-hidden="true">${['✳','◇','⌘','↗','◎','✦'][i]}</div><h3>${esc(s.short)}</h3><p>${esc(s.title)}</p><div class="step-card-bottom"><span>${getSummary(s.id).approved?'Synthèse relue ✓':(countAnswers(s)+'/3 réponses commencées')}</span><span aria-hidden="true">↗</span></div></button>`).join('')}</div>
-      <section class="workflow-intro"><div class="eyebrow color-blue">COMMENT ÇA MARCHE ?</div><h2>Une vraie boucle de réflexion.</h2><div class="workflow-grid"><div><strong>01</strong> J’écris librement</div><div><strong>02</strong> J’approfondis avec ChatGPT</div><div><strong>03</strong> Je formule ma synthèse</div><div><strong>04</strong> Je la valide moi-même</div></div><button class="btn btn-ghost" data-go="bilan">Voir mon bilan de mission ↗</button><p>L’échange avec ChatGPT aide à approfondir tes idées. Tu choisis ce que tu partages et ce que tu souhaites retenir.</p></section><div class="soft-note"><span aria-hidden="true">◎</span> <p><strong>Un espace privé, pas un examen.</strong> Tes réponses restent dans ton navigateur. Tu es libre de les relire, de les modifier et de décider si tu veux les partager. Pense à sauvegarder ton carnet.</p></div>
+      <section class="explore-teaser"><div><div class="eyebrow color-blue">APRÈS LES SIX MISSIONS</div><h2>Explorer mon avenir</h2><p>Des domaines, des activités et des métiers à explorer à partir de tes propres synthèses.</p></div><button class="btn btn-lime" data-go="explorer">Découvrir la suite ↗</button></section><section class="workflow-intro"><div class="eyebrow color-blue">COMMENT ÇA MARCHE ?</div><h2>Une vraie boucle de réflexion.</h2><div class="workflow-grid"><div><strong>01</strong> J’écris librement</div><div><strong>02</strong> J’approfondis avec ChatGPT</div><div><strong>03</strong> Je formule ma synthèse</div><div><strong>04</strong> Je la valide moi-même</div></div><button class="btn btn-ghost" data-go="bilan">Voir mon bilan de mission ↗</button><p>L’échange avec ChatGPT aide à approfondir tes idées. Tu choisis ce que tu partages et ce que tu souhaites retenir.</p></section><div class="soft-note"><span aria-hidden="true">◎</span> <p><strong>Un espace privé, pas un examen.</strong> Tes réponses restent dans ton navigateur. Tu es libre de les relire, de les modifier et de décider si tu veux les partager. Pense à sauvegarder ton carnet.</p></div>
     </div>`;
     attachNavHandlers();
   }
@@ -978,7 +979,7 @@ body.is-installed #install-app{display:none}
       <div class="bilan-warning"><span>◎</span><p>Une synthèse est une photographie de ce que tu penses aujourd’hui, pas une vérité définitive. Seules celles que tu as validées pourront être proposées à ChatGPT, et seulement si tu choisis de les partager.</p></div>
       <div class="bilan-recaps">${stages.map(st=>{const sum=getSummary(st.id);return `<article class="bilan-recap"><div class="bilan-recap-head"><span>MISSION ${String(st.id).padStart(2,'0')}</span><strong>${esc(st.title)}</strong><small>${sum.approved?'✓ Relue':'En cours'}</small></div>${summaryFields.map(f=>sum[f.id]?.trim()?`<div class="bilan-quote"><b>${esc(f.label)}</b><p>${esc(sum[f.id]).replace(/\n/g,'<br>')}</p></div>`:'').join('')||'<p class="bilan-empty">Pas encore de synthèse personnelle.</p>'}<button class="btn-small-link" data-stage="${st.id}">Revenir à cette mission ↗</button></article>`}).join('')}</div>
       <section class="bilan-personal"><div class="eyebrow color-pink">DERNIER REGARD</div><h2>Ce que je choisis de retenir</h2><p>Tu peux utiliser les idées qui reviennent, ou écrire tout autre chose. Ces réponses sont enregistrées dans ton carnet.</p><div class="summary-grid">${finalFields.map((f,i)=>`<div class="summary-field"><label for="final-${f.id}"><span>${String(i+1).padStart(2,'0')}</span> ${esc(f.label)}</label><p>${esc(f.hint)}</p><textarea id="final-${f.id}" data-final="${f.id}" rows="5" placeholder="Mes propres mots…">${esc(state.final[f.id]||'')}</textarea></div>`).join('')}</div><div class="bilan-actions"><button class="btn btn-blue" id="bilan-chat">✦ Approfondir ce bilan avec ChatGPT ↗</button><button class="btn btn-lime" id="bilan-export">↓ Exporter mon carnet</button></div><small>Les synthèses personnelles relues sont proposées dans le message, que tu peux modifier avant de le copier.</small></section>
-      <div class="mission-endnote">MON CAP / PARCOURS <span>Tu restes libre de changer d’avis.</span></div></div>`;
+      <section class="explore-teaser"><div><div class="eyebrow color-blue">APRÈS LES SIX MISSIONS</div><h2>Explorer mon avenir</h2><p>Des domaines, des activités et des métiers à explorer à partir de tes propres synthèses.</p></div><button class="btn btn-lime" data-go="explorer">Découvrir la suite ↗</button></section><div class="mission-endnote">MON CAP / PARCOURS <span>Tu restes libre de changer d’avis.</span></div></div>`;
     attachNavHandlers();
     app.querySelectorAll('[data-final]').forEach(el=>el.addEventListener('input',()=>{state.final[el.dataset.final]=el.value;store();}));
     document.getElementById('bilan-chat').addEventListener('click',openGlobalChat);
@@ -999,6 +1000,11 @@ body.is-installed #install-app{display:none}
     }
     md+='## Bilan du parcours\n\n';
     for(const f of finalFields)md+=`### ${f.label}\n\n${(state.final[f.id]||'').trim()||'_(À compléter si je le souhaite.)_'}\n\n`;
+    md+='\n## Explorer mon avenir\n\n';
+    if(state.exploration.draft.trim())md+='### Brouillon ChatGPT à vérifier\n\n'+state.exploration.draft+'\n\n';
+    state.exploration.pistes.forEach((p,i)=>{
+      if(Object.values(p).some(v=>v.trim()))md+='### Piste '+(i+1)+' : '+(p.title||'À nommer')+'\n\nPourquoi : '+p.why+'\n\nFormation à vérifier : '+p.training+'\n\nActivité : '+p.activity+'\n\nCe que j’ai appris : '+p.learned+'\n\n';
+    });
     return md;
   }
   async function download(content,filename,type) {
@@ -1025,6 +1031,51 @@ body.is-installed #install-app{display:none}
   }
   function downloadMarkdown() { download(makeMarkdown(),'mon-cap-parcours.md','text/markdown;charset=utf-8'); }
   function downloadJSON() { download(JSON.stringify(state,null,2),'mon-cap-sauvegarde.json','application/json;charset=utf-8'); }
+
+function makeExplorerPrompt(){
+ if(approvedCount()!==6)return '';
+ let parts=["J’ai 16 ans et je viens de terminer les six missions MON CAP. Je souhaite découvrir des domaines d’études, activités et métiers concrets à explorer, sans conclusion définitive.","Pose UNE question ouverte à la fois. Commence par clarifier mes intérêts et mes contraintes, sans diagnostic, score ni classement. Distingue mes constats et tes hypothèses, et demande des exemples."];
+ for(const st of stages){
+  const summary=getSummary(st.id);parts.push('Mission '+st.id+' — '+st.short);
+  for(const field of summaryFields)if(summary[field.id].trim())parts.push(field.label+' : '+summary[field.id].trim());
+ }
+ if(state.priorities.length)parts.push('Mes priorités sélectionnées : '+state.priorities.join(', '));
+ parts.push("Quand je te le demanderai, propose 5 à 8 pistes variées : domaine, métiers concrets, justification avec mes exemples, aspects à vérifier, formations françaises possibles, incertitudes et petite activité à essayer. Ne fabrique pas d'établissements ni de conditions d'admission ; suggère Onisep, Parcoursup et CIDJ pour vérifier. Je garde le dernier mot. Commence par une question concrète.");
+ return parts.join('\n\n');
+}
+function renderExplorer(){
+ const ready=approvedCount()===6,xp=state.exploration;
+ let html='<div class="page-in explore-page"><div class="topline"><span>MON CAP / APRÈS LES SIX MISSIONS</span><span>MON AVENIR · MES CHOIX</span></div>';
+ html+='<section class="explore-hero"><div class="eyebrow color-blue">MA PROCHAINE EXPLORATION</div><h1>Explorer mon avenir<span class="headline-period">.</span></h1><p>Découvrir des domaines d’études, des activités et des métiers à explorer, sans décider trop tôt de mon avenir.</p><strong>'+approvedCount()+' / 6 synthèses personnelles validées</strong></section>';
+ if(ready){
+  html+='<section class="explore-zone"><h2>01 · Échanger avec ChatGPT</h2><p>Le message reprend tes six synthèses validées. Relis-le et modifie-le avant de le copier : rien n’est transmis automatiquement.</p><button class="btn btn-blue" id="explore-chat">✦ Préparer mon exploration avec ChatGPT ↗</button></section>';
+  html+='<section class="explore-zone"><h2>02 · Mon brouillon de pistes</h2><p>Colle les suggestions qui méritent d’être explorées, et non un verdict sur ton avenir.</p><textarea id="explore-draft" rows="7" placeholder="Notes de ma discussion avec ChatGPT…">'+esc(xp.draft)+'</textarea></section>';
+  html+='<section class="explore-zone"><h2>03 · Mes trois pistes à vérifier</h2><p>Tu choisis les pistes qui t’intéressent, même si ChatGPT en a proposé d’autres.</p><div class="explore-grid">';
+  const fields=[['title','Domaine ou métier'],['why','Pourquoi cette piste m’intéresse'],['training','Formation à vérifier'],['activity','Activité concrète à essayer'],['learned','Ce que j’ai appris après avoir essayé']];
+  xp.pistes.forEach((p,i)=>{html+='<article class="explore-piste"><h3>Piste '+(i+1)+'</h3>';fields.forEach(f=>{html+='<label>'+f[1]+'<textarea rows="3" data-piste="'+i+'" data-field="'+f[0]+'" placeholder="Mes propres mots…">'+esc(p[f[0]])+'</textarea></label>';});html+='</article>';});
+  html+='</div></section><section class="explore-zone"><h2>04 · Vérifier mes informations</h2><p>Les propositions de l’IA peuvent être inexactes : vérifie les formations et leurs conditions sur des sources fiables.</p><div class="explore-links"><a href="https://www.onisep.fr/" target="_blank" rel="noopener noreferrer">Onisep ↗</a><a href="https://www.parcoursup.gouv.fr/" target="_blank" rel="noopener noreferrer">Parcoursup ↗</a><a href="https://www.cidj.com/" target="_blank" rel="noopener noreferrer">CIDJ ↗</a></div><button class="btn btn-lime" id="explore-export">↓ Exporter mon carnet</button> <button class="btn btn-ghost" id="explore-backup">↓ Sauvegarde complète</button></section>';
+ }else{
+  html+='<section class="explore-zone"><h2>Un espace pour la suite de ton parcours</h2><p>Relis et valide d’abord les six synthèses. Tu pourras ensuite préparer ton exploration à partir des idées que tu as choisies.</p>';
+  stages.forEach(st=>{html+='<p><button class="btn btn-ghost" data-stage="'+st.id+'">'+(getSummary(st.id).approved?'✓':'○')+' '+esc(st.short)+' ↗</button></p>';});
+  html+='<button class="btn btn-lime" data-go="bilan">Voir mon bilan ↗</button></section>';
+ }
+ html+='</div>';
+ app.innerHTML=html;attachNavHandlers();
+ if(!ready)return;
+ document.getElementById('explore-chat').addEventListener('click',()=>{
+  document.getElementById('dialog-title').textContent='Explorer mon avenir avec ChatGPT';
+  document.getElementById('prompt-preview').value=makeExplorerPrompt();
+  document.getElementById('dialog-tip').textContent='Relis ce message avant de le copier. Rien n’est envoyé automatiquement.';
+  promptDialog.showModal();
+ });
+ document.getElementById('explore-draft').addEventListener('input',e=>{state.exploration.draft=e.target.value.slice(0,50000);store();});
+ app.querySelectorAll('[data-piste]').forEach(el=>el.addEventListener('input',()=>{
+  state.exploration.pistes[Number(el.dataset.piste)][el.dataset.field]=el.value.slice(0,15000);store();
+ }));
+ document.getElementById('explore-export').addEventListener('click',downloadMarkdown);
+ document.getElementById('explore-backup').addEventListener('click',downloadJSON);
+}
+
   function makePrompt(stageId) {
     const s=stages[stageId-1];
     let p=`J'ai 16 ans. Je fais la mission ${stageId}/6 de mon parcours personnel « MON CAP » pour réfléchir à mon avenir. Son thème est « ${s.short} » : « ${s.title} ».\n\n`;
